@@ -146,7 +146,9 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(FunctionDeclaration functionDeclaration) {
-        //todo
+
+
+
         return null;
     }
 
@@ -168,8 +170,17 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(VariableDeclaration variableDeclaration) {
-        //todo
-        return null;
+        String command = "";
+        Type type = variableDeclaration.getVarType();
+        if (type instanceof IntType) {
+            command += "ldc 0\n";
+            command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        } else if (type instanceof BoolType) {
+            command += "ldc 0\n";
+            command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+        } else if (type instanceof FptrType)
+            command += "aconst_null\n";
+        return command;
     }
 
     @Override
@@ -197,7 +208,9 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(FunctionCallStmt functionCallStmt) {
-        //todo
+        expressionTypeChecker.setInFunctionCallStmt(true);
+        addCommand(functionCallStmt.getFunctionCall().accept(this) + "pop\n");
+        expressionTypeChecker.setInFunctionCallStmt(false);
         return null;
     }
 
@@ -218,7 +231,11 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ReturnStmt returnStmt) {
-        //todo
+        String command = returnStmt.getReturnedExpr().accept(this);
+        Type expr_type = returnStmt.getReturnedExpr().accept(expressionTypeChecker);
+        if(expr_type instanceof VoidType) command += "return\n";
+        else command += "areturn\n";
+        addCommand(command);
         return null;
     }
 
@@ -236,8 +253,7 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListAppendStmt listAppendStmt) {
-        //todo
-        return null;
+        return listAppendStmt.getListAppendExpr().accept(this);
     }
 
     @Override
