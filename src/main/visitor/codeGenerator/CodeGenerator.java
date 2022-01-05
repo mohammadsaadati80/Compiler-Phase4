@@ -147,8 +147,56 @@ public class CodeGenerator extends Visitor<String> {
     @Override
     public String visit(FunctionDeclaration functionDeclaration) {
 
+        String funcName = functionDeclaration.getFunctionName().getName();
 
+        String command = "";
+        command += ".method public " + funcName;
 
+        FunctionSymbolTableItem fsti = null;
+        try {
+            fsti = (FunctionSymbolTableItem) SymbolTable.root.getItem("Function_" + funcName);
+        } catch (ItemNotFoundException exception) {
+            exception.printStackTrace();
+        }
+
+        currentFunction = functionDeclaration;
+
+        Type returnType = fsti.getReturnType();
+        ArrayList<Type> argTypes = fsti.getArgTypes();
+
+        StringBuilder argList = new StringBuilder("(");
+        for (Type t : argTypes) {
+            argList.append(getTypeString(t));
+        }
+        argList.append(")");
+        argList.append(getTypeString(returnType));
+        command += argList.toString() + "\n";
+
+        command += ".limit stack 128\n";
+        command += ".limit locals 128\n";
+//        addCommand(command);
+
+//        command += functionDeclaration.getBody().accept(this);
+
+//        addCommand(".end method\n");
+        currentFunction = null;
+        return command;
+    }
+
+    public String getTypeString(Type t) {
+        if (t instanceof IntType)
+            return "Ljava/lang/Integer;";
+        if (t instanceof BoolType)
+            return "Ljava/lang/Boolean;";
+        if (t instanceof ListType)
+            return "LList;";
+        if (t instanceof FptrType)
+            return "LFptr;";
+        if (t instanceof VoidType)
+            return "V";
+        // TODO StructType
+        /*if (t instanceof StructType)
+            return "Yechizi";*/
         return null;
     }
 
