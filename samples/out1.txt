@@ -20,13 +20,10 @@ Compilation successful
 -------------------Generating Class Files-------------------
 Generated: Fptr.class
 Generated: List.class
-Main.j: JAS Error: empty source file.
-Main.j: Found 1 errors
+Generated: Main.class
 Order.j: JAS Error: empty source file.
 Order.j: Found 1 errors
 ProductCatalog.j: JAS Error: empty source file.
 ProductCatalog.j: Found 1 errors
 
 ---------------------------Output---------------------------
-Error: Could not find or load main class Main
-Caused by: java.lang.ClassNotFoundException: Main
