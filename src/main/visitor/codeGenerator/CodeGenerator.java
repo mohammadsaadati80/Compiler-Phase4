@@ -98,6 +98,7 @@ public class CodeGenerator extends Visitor<String> {
     }
 
     private int slotOf(String identifier) throws ItemNotFoundException {
+        //TODO
         /*int slot = 1;
         for(VariableDeclaration var: currentFunction.getArgs()){
             if(var.getVarName().getName().equals(identifier)) return slot;
@@ -157,8 +158,6 @@ public class CodeGenerator extends Visitor<String> {
         addCommand(".limit locals 128\n");
         addCommand(".limit stack 128\n");
 
-//        command += "aload_0\n";
-//        addCommand("invokespecial java/lang/Object/<init>()V\n");
         mainDeclaration.getBody().accept(this);
 
         addCommand("return\n");
@@ -186,7 +185,7 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(BlockStmt blockStmt) {
-        //todo
+        for (Statement statement : blockStmt.getStatements()) statement.accept(this);
         return null;
     }
 
@@ -272,8 +271,12 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListAccessByIndex listAccessByIndex) {
-        //todo
-        return null;
+        String command = listAccessByIndex.getInstance().accept(this);
+        command += listAccessByIndex.getIndex().accept(this);
+        command += "invokevirtual java/lang/Integer/intValue()I\n";
+        command += "invokevirtual List/getElement(I)Ljava/lang/Object;\n";
+        command += "checkcast java/lang/Integer\n";
+        return command;
     }
 
     @Override
@@ -284,8 +287,10 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListSize listSize) {
-        //todo
-        return null;
+        String command = listSize.accept(this);
+        command += "invokevirtual List/getSize()I\n";
+        command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        return command;
     }
 
     @Override
@@ -296,14 +301,16 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(IntValue intValue) {
-        //todo
-        return null;
+        String command = "ldc " + intValue.getConstant() + "\n";
+        command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        return command;
     }
 
     @Override
     public String visit(BoolValue boolValue) {
-        //todo
-        return null;
+        String command = "ldc " + (boolValue.getConstant() ? 1 : 0) + "\n";
+        command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+        return command;
     }
 
     @Override
