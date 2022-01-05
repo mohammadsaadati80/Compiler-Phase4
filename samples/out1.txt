@@ -1,2 +1,32 @@
-Error: LinkageError occurred while loading main class main.Cmm
-	java.lang.UnsupportedClassVersionError: main/Cmm has been compiled by a more recent version of the Java Runtime (class file version 56.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+
+--------------------------Compiling--------------------------
+line 52:15 no viable alternative at input 'whilei<4begin\norder=createOrder(productCatalog[i],i+1)\norders.append'
+line 51:8 extraneous input 'order' expecting {<EOF>, '
+'}
+line 52:8 extraneous input 'orders' expecting {<EOF>, '
+'}
+line 53:8 extraneous input 'i' expecting {<EOF>, '
+'}
+line 54:4 extraneous input 'end' expecting {<EOF>, '
+'}
+line 55:4 extraneous input 'total' expecting {<EOF>, '
+'}
+line 56:4 extraneous input 'display' expecting {<EOF>, '
+'}
+line 57:0 extraneous input 'end' expecting {<EOF>, '
+'}
+Compilation successful
+
+-------------------Generating Class Files-------------------
+Generated: Fptr.class
+Generated: List.class
+Main.j: JAS Error: empty source file.
+Main.j: Found 1 errors
+Order.j: JAS Error: empty source file.
+Order.j: Found 1 errors
+ProductCatalog.j: JAS Error: empty source file.
+ProductCatalog.j: Found 1 errors
+
+---------------------------Output---------------------------
+Error: Could not find or load main class Main
+Caused by: java.lang.ClassNotFoundException: Main
