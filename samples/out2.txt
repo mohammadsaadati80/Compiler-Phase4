@@ -5,8 +5,16 @@ Compilation successful
 -------------------Generating Class Files-------------------
 Generated: Fptr.class
 Generated: List.class
-Main.j: JAS Error: empty source file.
-Main.j: Found 1 errors
+Main.j:30: Warning - Syntax error.
+
+^
+Main.j:101: Warning - Syntax error.
+
+^
+Main.j:102: JAS Error: Missing arguments for instruction invokevirtual.
+		l
+		 ^
+Main.j: Found 3 errors
 
 ---------------------------Output---------------------------
 Error: Could not find or load main class Main
