@@ -261,8 +261,20 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ConditionalStmt conditionalStmt) {
-        //todo
-        return null;
+        String elseLabel = getNewLabel();
+        String exitLabel = getNewLabel();
+        String command = conditionalStmt.getCondition().accept(this);
+        command += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+        command += "ifeq " + elseLabel + "\n";
+        command += conditionalStmt.getThenBody().accept(this);
+        command += "goto " + exitLabel + "\n";
+        command += elseLabel + ":\n";
+        //command += dummyInstruction(); //todo ??
+        if (conditionalStmt.getElseBody() != null)
+            command += conditionalStmt.getElseBody().accept(this);
+        command += exitLabel + ":\n";
+        //command += dummyInstruction();
+        return command;
     }
 
     @Override
@@ -346,13 +358,17 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListAppendStmt listAppendStmt) {
-        return listAppendStmt.getListAppendExpr().accept(this);
+        expressionTypeChecker.setInFunctionCallStmt(true);
+        String command =  listAppendStmt.getListAppendExpr().accept(this);
+        expressionTypeChecker.setInFunctionCallStmt(false);
+        return command; // todo not sure
     }
 
     @Override
     public String visit(ListSizeStmt listSizeStmt) {
-        //todo
-        return null;
+        addCommand(listSizeStmt.getListSizeExpr().accept(this));
+        addCommand("pop");
+        return null; // todo not sure
     }
 
     private String getNewLabel() {
