@@ -18,12 +18,3 @@ line 57:0 extraneous input 'end' expecting {<EOF>, '
 Compilation successful
 
 -------------------Generating Class Files-------------------
-Generated: Fptr.class
-Generated: List.class
-Generated: Main.class
-Order.j: JAS Error: empty source file.
-Order.j: Found 1 errors
-ProductCatalog.j: JAS Error: empty source file.
-ProductCatalog.j: Found 1 errors
-
----------------------------Output---------------------------

@@ -130,7 +130,24 @@ public class CodeGenerator extends Visitor<String> {
     @Override
     public String visit(StructDeclaration structDeclaration) {
         createFile(structDeclaration.getStructName().getName());
-        //todo
+
+        addCommand(".class public " + structDeclaration.getStructName().getName());
+        addCommand(".super java/lang/Object");
+
+
+
+        addCommand(".method public <init>()V");
+        addCommand(".limit stack 128");
+        addCommand(".limit locals 128");
+
+        addCommand("aload_0");
+        addCommand("invokespecial " + structDeclaration.getStructName().getName() + "/<init>()V");
+
+
+
+        addCommand("return");
+        addCommand(".end method");
+
         return null;
     }
 
@@ -185,9 +202,9 @@ public class CodeGenerator extends Visitor<String> {
             return "LFptr;";
         if (t instanceof VoidType)
             return "V";
-        // TODO StructType
-        /*if (t instanceof StructType)
-            return "Yechizi";*/
+        // TODO StructType Nemidonam Object bayad bahse ya khode class
+        if (t instanceof StructType)
+            return "Ljava/lang/Object;";
         return null;
     }
 
@@ -276,10 +293,39 @@ public class CodeGenerator extends Visitor<String> {
             return null;
         }
         String command = returnStmt.getReturnedExpr().accept(this);
+        // TODO Ehtemalan kht paeen moshkel dare
         Type expr_type = returnStmt.getReturnedExpr().accept(expressionTypeChecker);
         if (expr_type instanceof VoidType) command += "return\n";
         else command += "areturn\n";
         addCommand(command);
+
+        /*if (returnStmt.getReturnedExpr() == null){
+            addCommand("return\n");
+            return null;
+        }
+        Type retType = returnStmt.getReturnedExpr().accept(expressionTypeChecker);
+
+        if (retType instanceof IntType) {
+            addCommand("new java/lang/Integer");
+            addCommand("dup");
+            addCommand(returnStmt.getReturnedExpr().accept(this));
+            addCommand("invokespecial java/lang/Integer/<init>(I)V");
+            addCommand("areturn");
+        }
+        else if (retType instanceof BoolType) {
+            addCommand("new java/lang/Boolean");
+            addCommand("dup");
+            addCommand(returnStmt.getReturnedExpr().accept(this));
+            addCommand("invokespecial java/lang/Boolean/<init>(Z)V");
+            addCommand("areturn");
+        }
+        else {
+            addCommand(returnStmt.getReturnedExpr().accept(this));
+            addCommand("areturn");
+        }
+
+        return null;*/
+
         return null;
     }
 
