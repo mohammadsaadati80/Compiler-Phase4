@@ -202,7 +202,7 @@ public class CodeGenerator extends Visitor<String> {
             return "LFptr;";
         if (t instanceof VoidType)
             return "V";
-        // TODO StructType Nemidonam Object bayad bahse ya khode class
+        //  TODO StructType Nemidonam Object bayad bahse ya khode class
         if (t instanceof StructType)
             return "Ljava/lang/Object;";
         return null;
@@ -247,7 +247,9 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(AssignmentStmt assignmentStmt) {
-        //todo
+        String commands = this.visit(new BinaryExpression(assignmentStmt.getLValue(), assignmentStmt.getRValue(), BinaryOperator.assign));
+        addCommand(commands);
+        addCommand("pop");
         return null;
     }
 
@@ -551,17 +553,7 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(UnaryExpression unaryExpression) {
-        UnaryOperator operator = unaryExpression.getOperator();
-        String commands = "";
-        if (operator == UnaryOperator.minus) {
-            commands += unaryExpression.getOperand().accept(this);
-            commands += "ineg\n";
-        } else if (operator == UnaryOperator.not) {
-            commands += unaryExpression.getOperand().accept(this);
-            commands += "ldc 1\n";
-            commands += "ixor\n";
-        }
-        return commands;
+        return null;
     }
 
     @Override

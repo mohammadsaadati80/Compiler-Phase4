@@ -18,3 +18,12 @@ line 57:0 extraneous input 'end' expecting {<EOF>, '
 Compilation successful
 
 -------------------Generating Class Files-------------------
+Generated: Fptr.class
+Generated: List.class
+Generated: Main.class
+Generated: Order.class
+Generated: ProductCatalog.class
+
+---------------------------Output---------------------------
+Error: Unable to initialize main class Main
+Caused by: java.lang.VerifyError: (class: Main, method: getSum signature: (LList;)Ljava/lang/Integer;) Accessing value from uninitialized register 5
