@@ -101,10 +101,10 @@ public class CodeGenerator extends Visitor<String> {
 
     private int slotOf(String identifier) {
         if (identifier.equals(""))
-            return localVars.size() - 1 + this.tmpVarCnt;
+            return localVars.size() - 1 + this.tmpVarCnt; //todo chera injuri?
 
         for (int i = 0; i < localVars.size(); i++)
-            if (localVars.get(i).equals(identifier)) return i;
+            if (localVars.get(i).equals(identifier)) return i; //todo  i or i+1 ??  shoroe slot loaclVar az 1 hast
 
         return 0;
     }
@@ -143,7 +143,7 @@ public class CodeGenerator extends Visitor<String> {
         addCommand("aload_0");
         addCommand("invokespecial " + structDeclaration.getStructName().getName() + "/<init>()V");
 
-
+        //todo chera moteghayyer ha visit nashodan?
 
         addCommand("return");
         addCommand(".end method");
@@ -157,7 +157,7 @@ public class CodeGenerator extends Visitor<String> {
         currentFunction = functionDeclaration;
         String funcName = functionDeclaration.getFunctionName().getName();
         for (VariableDeclaration variableDeclaration : functionDeclaration.getArgs())
-            localVars.add(variableDeclaration.getVarName().getName());
+            localVars.add(variableDeclaration.getVarName().getName()); //todo nabayad ghable for localVar Clear she?
 
         String command = "";
         command += ".method public " + funcName;
@@ -186,7 +186,7 @@ public class CodeGenerator extends Visitor<String> {
 
         command += functionDeclaration.getBody().accept(this);
 
-        addCommand(".end method\n");
+        addCommand(".end method\n"); //todo chera 2 bar addCommand zadi?
         currentFunction = null;
         return command;
     }
@@ -216,7 +216,7 @@ public class CodeGenerator extends Visitor<String> {
         addCommand(".limit locals 128\n");
         addCommand(".limit stack 128\n");
 
-        mainDeclaration.getBody().accept(this);
+        mainDeclaration.getBody().accept(this); //todo chera addCommand nakardi?
 
         addCommand("return\n");
         addCommand(".end method\n");
@@ -226,7 +226,7 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(VariableDeclaration variableDeclaration) {
-        if (currentFunction != null) localVars.add(variableDeclaration.getVarName().getName());
+        if (currentFunction != null) localVars.add(variableDeclaration.getVarName().getName()); //todo halte dar struct boodan koo?
         String command = "";
         Type type = variableDeclaration.getVarType();
         if (type instanceof IntType) {
@@ -263,24 +263,26 @@ public class CodeGenerator extends Visitor<String> {
     public String visit(ConditionalStmt conditionalStmt) {
         String elseLabel = getNewLabel();
         String exitLabel = getNewLabel();
-        String command = conditionalStmt.getCondition().accept(this);
-        command += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
-        command += "ifeq " + elseLabel + "\n";
-        command += conditionalStmt.getThenBody().accept(this);
-        command += "goto " + exitLabel + "\n";
-        command += elseLabel + ":\n";
-        //command += dummyInstruction(); //todo ??
+        addCommand(conditionalStmt.getCondition().accept(this));
+        addCommand("invokevirtual java/lang/Boolean/booleanValue()Z\n");
+        addCommand("ifeq " + elseLabel + "\n");
+        addCommand(conditionalStmt.getThenBody().accept(this));
+        addCommand("goto " + exitLabel + "\n");
+        addCommand(elseLabel + ":\n");
+        addCommand("iconst_0\n");
+        addCommand("pop\n");
         if (conditionalStmt.getElseBody() != null)
-            command += conditionalStmt.getElseBody().accept(this);
-        command += exitLabel + ":\n";
-        //command += dummyInstruction();
-        return command;
+            addCommand(conditionalStmt.getElseBody().accept(this));
+        addCommand(exitLabel + ":\n");
+        addCommand("iconst_0\n");
+        addCommand("pop\n");
+        return null;
     }
 
     @Override
     public String visit(FunctionCallStmt functionCallStmt) {
         expressionTypeChecker.setInFunctionCallStmt(true);
-        addCommand(functionCallStmt.getFunctionCall().accept(this) + "pop\n");
+        addCommand(functionCallStmt.getFunctionCall().accept(this) + "pop\n"); //todo agar void bood ham pop konim?
         expressionTypeChecker.setInFunctionCallStmt(false);
         return null;
     }
@@ -359,16 +361,16 @@ public class CodeGenerator extends Visitor<String> {
     @Override
     public String visit(ListAppendStmt listAppendStmt) {
         expressionTypeChecker.setInFunctionCallStmt(true);
-        String command =  listAppendStmt.getListAppendExpr().accept(this);
+        addCommand(listAppendStmt.getListAppendExpr().accept(this));
         expressionTypeChecker.setInFunctionCallStmt(false);
-        return command; // todo not sure
+        return null;
     }
 
     @Override
     public String visit(ListSizeStmt listSizeStmt) {
         addCommand(listSizeStmt.getListSizeExpr().accept(this));
         addCommand("pop");
-        return null; // todo not sure
+        return null;
     }
 
     private String getNewLabel() {
@@ -405,7 +407,7 @@ public class CodeGenerator extends Visitor<String> {
     }*/
 
     @Override
-    public String visit(BinaryExpression binaryExpression) {
+    public String visit(BinaryExpression binaryExpression) { //todo WTF XD
         BinaryOperator operator = binaryExpression.getBinaryOperator();
         String commands = "";
         if (operator == BinaryOperator.add) {
@@ -582,7 +584,7 @@ public class CodeGenerator extends Visitor<String> {
     public String visit(Identifier identifier) {
         String commands = "";
         Type t = identifier.accept(this.expressionTypeChecker);
-        int slot = slotOf(identifier.getName());
+        int slot = slotOf(identifier.getName()); //todo agar fptr bashe chi?
         commands += "aload " + slot + "\n";
         if (t instanceof BoolType)
             commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
@@ -597,7 +599,7 @@ public class CodeGenerator extends Visitor<String> {
         command += listAccessByIndex.getIndex().accept(this);
         command += "invokevirtual java/lang/Integer/intValue()I\n";
         command += "invokevirtual List/getElement(I)Ljava/lang/Object;\n";
-        command += "checkcast java/lang/Integer\n";
+        command += "checkcast java/lang/Integer\n"; //todo tabdil be primitive koo?
         return command;
     }
 
@@ -605,7 +607,7 @@ public class CodeGenerator extends Visitor<String> {
     public String visit(FunctionCall functionCall) {
         StringBuilder commands = new StringBuilder();
         commands.append(functionCall.getInstance().accept(this));
-        commands.append("new java/util/ArrayList\ndup\ninvokespecial java/util/ArrayList/<init>()V\n");
+        commands.append("new java/util/ArrayList\ndup\ninvokespecial java/util/ArrayList/<init>()V\n"); //todo tempVar,slot(""),...
         for (Expression e : functionCall.getArgs()) {
             commands.append("dup\n");
             commands.append(e.accept(this));
@@ -628,7 +630,7 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListSize listSize) {
-        String command = listSize.accept(this);
+        String command = listSize.getArg().accept(this);
         command += "invokevirtual List/getSize()I\n";
         command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         return command;
@@ -636,8 +638,11 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ListAppend listAppend) {
-        //todo
-        return null;
+        String command = listAppend.getListArg().accept(this);
+        command += "dup\n";
+        command += listAppend.getElementArg().accept(this);
+        command += "invokevirtual List/addElement(Ljava/lang/Object;)V\n";
+        return command;
     }
 
     @Override

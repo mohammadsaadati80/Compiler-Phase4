@@ -1,29 +1,20 @@
 
 --------------------------Compiling--------------------------
-line 52:15 no viable alternative at input 'whilei<4begin\norder=createOrder(productCatalog[i],i+1)\norders.append'
-line 51:8 extraneous input 'order' expecting {<EOF>, '
-'}
-line 52:8 extraneous input 'orders' expecting {<EOF>, '
-'}
-line 53:8 extraneous input 'i' expecting {<EOF>, '
-'}
-line 54:4 extraneous input 'end' expecting {<EOF>, '
-'}
-line 55:4 extraneous input 'total' expecting {<EOF>, '
-'}
-line 56:4 extraneous input 'display' expecting {<EOF>, '
-'}
-line 57:0 extraneous input 'end' expecting {<EOF>, '
-'}
 Compilation successful
 
 -------------------Generating Class Files-------------------
 Generated: Fptr.class
 Generated: List.class
-Generated: Main.class
 Generated: Order.class
 Generated: ProductCatalog.class
+Main.j:44: Warning - Syntax error.
+
+^
+Main.j:45: JAS Error: Missing arguments for instruction invokespecial.
+		d
+		 ^
+Main.j: Found 2 errors
 
 ---------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: getSum signature: (LList;)Ljava/lang/Integer;) Accessing value from uninitialized register 5
+Error: Could not find or load main class Main
+Caused by: java.lang.ClassNotFoundException: Main
