@@ -263,20 +263,34 @@ public class CodeGenerator extends Visitor<String> {
     public String visit(ConditionalStmt conditionalStmt) {
         String elseLabel = getNewLabel();
         String exitLabel = getNewLabel();
-        addCommand(conditionalStmt.getCondition().accept(this));
-        addCommand("invokevirtual java/lang/Boolean/booleanValue()Z\n");
-        addCommand("ifeq " + elseLabel + "\n");
-        addCommand(conditionalStmt.getThenBody().accept(this));
-        addCommand("goto " + exitLabel + "\n");
-        addCommand(elseLabel + ":\n");
-        addCommand("iconst_0\n");
-        addCommand("pop\n");
+//        addCommand(conditionalStmt.getCondition().accept(this));
+//        addCommand("invokevirtual java/lang/Boolean/booleanValue()Z\n");
+//        addCommand("ifeq " + elseLabel + "\n");
+//        addCommand(conditionalStmt.getThenBody().accept(this));
+//        addCommand("goto " + exitLabel + "\n");
+//        addCommand(elseLabel + ":\n");
+//        addCommand("iconst_0\n");
+//        addCommand("pop\n");
+//        if (conditionalStmt.getElseBody() != null)
+//            addCommand(conditionalStmt.getElseBody().accept(this));
+//        addCommand(exitLabel + ":\n");
+//        addCommand("iconst_0\n");
+//        addCommand("pop\n");
+//        return null;
+        String command = (conditionalStmt.getCondition().accept(this));
+        command += ("invokevirtual java/lang/Boolean/booleanValue()Z\n");
+        command += ("ifeq " + elseLabel + "\n");
+        command += (conditionalStmt.getThenBody().accept(this));
+        command += ("goto " + exitLabel + "\n");
+        command += (elseLabel + ":\n");
+        command += ("iconst_0\n");
+        command += ("pop\n");
         if (conditionalStmt.getElseBody() != null)
-            addCommand(conditionalStmt.getElseBody().accept(this));
-        addCommand(exitLabel + ":\n");
-        addCommand("iconst_0\n");
-        addCommand("pop\n");
-        return null;
+            command += (conditionalStmt.getElseBody().accept(this));
+        command += (exitLabel + ":\n");
+        command += ("iconst_0\n");
+        command += ("pop\n");
+        return command;
     }
 
     @Override
