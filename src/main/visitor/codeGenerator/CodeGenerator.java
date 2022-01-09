@@ -13,6 +13,7 @@ import main.ast.types.primitives.*;
 import main.symbolTable.*;
 import main.symbolTable.exceptions.*;
 import main.symbolTable.items.FunctionSymbolTableItem;
+import main.symbolTable.items.StructSymbolTableItem;
 import main.visitor.Visitor;
 import main.visitor.type.ExpressionTypeChecker;
 
@@ -129,6 +130,12 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(StructDeclaration structDeclaration) {
+        try{
+            String structKey = StructSymbolTableItem.START_KEY + structDeclaration.getStructName().getName();
+            StructSymbolTableItem structSymbolTableItem = (StructSymbolTableItem)SymbolTable.root.getItem(structKey);
+            SymbolTable.push(structSymbolTableItem.getStructSymbolTable());
+        }catch (ItemNotFoundException e){//unreachable
+        }
         createFile(structDeclaration.getStructName().getName());
 
         addCommand(".class public " + structDeclaration.getStructName().getName());
@@ -148,11 +155,18 @@ public class CodeGenerator extends Visitor<String> {
         addCommand("return");
         addCommand(".end method");
 
+        SymbolTable.pop();
         return null;
     }
 
     @Override
     public String visit(FunctionDeclaration functionDeclaration) {
+        try{
+            String functionKey = FunctionSymbolTableItem.START_KEY + functionDeclaration.getFunctionName().getName();
+            FunctionSymbolTableItem functionSymbolTableItem = (FunctionSymbolTableItem)SymbolTable.root.getItem(functionKey);
+            SymbolTable.push(functionSymbolTableItem.getFunctionSymbolTable());
+        }catch (ItemNotFoundException e){//unreachable
+        }
 
         currentFunction = functionDeclaration;
         String funcName = functionDeclaration.getFunctionName().getName();
@@ -188,6 +202,8 @@ public class CodeGenerator extends Visitor<String> {
 
         addCommand(".end method\n"); //todo chera 2 bar addCommand zadi?
         currentFunction = null;
+
+        SymbolTable.pop();
         return command;
     }
 
@@ -210,6 +226,13 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(MainDeclaration mainDeclaration) {
+        try{
+            String functionKey = FunctionSymbolTableItem.START_KEY + "main";
+            FunctionSymbolTableItem functionSymbolTableItem = (FunctionSymbolTableItem)SymbolTable.root.getItem(functionKey);
+            SymbolTable.push(functionSymbolTableItem.getFunctionSymbolTable());
+        }catch (ItemNotFoundException e){//unreachable
+        }
+
         addCommand(".class public Main\n");
         addCommand(".super java/lang/Object\n");
         addCommand(".method public static main([Ljava/lang/String;)V\n");
@@ -221,6 +244,7 @@ public class CodeGenerator extends Visitor<String> {
         addCommand("return\n");
         addCommand(".end method\n");
 
+        SymbolTable.pop();
         return null;
     }
 

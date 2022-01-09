@@ -8,10 +8,10 @@ Generated: List.class
 Main.j:30: Warning - Syntax error.
 
 ^
-Main.j:125: Warning - Syntax error.
+Main.j:135: Warning - Syntax error.
 
 ^
-Main.j:126: JAS Error: Missing arguments for instruction invokevirtual.
+Main.j:136: JAS Error: Missing arguments for instruction invokevirtual.
 		l
 		 ^
 Main.j: Found 3 errors
