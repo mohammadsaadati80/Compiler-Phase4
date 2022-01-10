@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="sample1_v2" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="BUNDLED" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <output_file path="$PROJECT_DIR$/samples/out1_v2.txt" is_save="true" />
+    <option name="MAIN_CLASS_NAME" value="main.Cmm" />
+    <module name="PLC_P4" />
+    <option name="PROGRAM_PARAMETERS" value="samples\sample1_v2.cmm" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
