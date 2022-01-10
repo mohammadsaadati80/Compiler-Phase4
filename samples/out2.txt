@@ -1,14 +1,21 @@
 
 --------------------------Compiling--------------------------
-Exception in thread "main" java.lang.NullPointerException
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:463)
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
-	at main.ast.nodes.statement.ReturnStmt.accept(ReturnStmt.java:28)
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:214)
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
-	at main.ast.nodes.declaration.FunctionDeclaration.accept(FunctionDeclaration.java:55)
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:131)
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
-	at main.ast.nodes.Program.accept(Program.java:50)
-	at main.CmmCompiler.compile(CmmCompiler.java:38)
-	at main.Cmm.main(Cmm.java:11)
+Compilation successful
+
+-------------------Generating Class Files-------------------
+Generated: Fptr.class
+Generated: List.class
+Main.j:45: Warning - Syntax error.
+
+^
+Main.j:185: Warning - Syntax error.
+
+^
+Main.j:186: JAS Error: Missing arguments for instruction invokevirtual.
+		l
+		 ^
+Main.j: Found 3 errors
+
+---------------------------Output---------------------------
+Error: Could not find or load main class Main
+Caused by: java.lang.ClassNotFoundException: Main

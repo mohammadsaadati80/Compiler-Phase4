@@ -112,7 +112,7 @@ public class CodeGenerator extends Visitor<String> {
             if (localVars.get(i).equals(identifier)) return count;
             count++;
         }
-        return count + tmpVarCnt++; //todo or count; ??
+        return count + tmpVarCnt++; //todo or return count; ??
     }
 
     @Override
@@ -221,22 +221,45 @@ public class CodeGenerator extends Visitor<String> {
     }
 
     public String getTypeString(Type t) {
-        if (t instanceof IntType)
-            return "Ljava/lang/Integer;";
-        if (t instanceof BoolType)
-            return "Ljava/lang/Boolean;";
-        if (t instanceof ListType)
-            return "LList;";
-        if (t instanceof FptrType)
-            return "LFptr;";
-        if (t instanceof VoidType)
-            return "V";
-        //  TODO StructType Nemidonam Object bayad bahse ya khode class
+//        if (t instanceof IntType)
+//            return "Ljava/lang/Integer;";
+//        if (t instanceof BoolType)
+//            return "Ljava/lang/Boolean;";
+//        if (t instanceof ListType)
+//            return "LList;";
+//        if (t instanceof FptrType)
+//            return "LFptr;";
+//        if (t instanceof VoidType)
+//            return "V";
+//        //  TODO StructType Nemidonam Object bayad bahse ya khode class
+////        if (t instanceof StructType)
+////            return "Ljava/lang/Object;";
 //        if (t instanceof StructType)
-//            return "Ljava/lang/Object;";
-        if (t instanceof StructType)
-            return "L" + ((StructType) t).getStructName().getName() + ";";
-        return null;
+//            return "L" + ((StructType) t).getStructName().getName() + ";";
+//        return null;
+        return "L" + getClass(t) + ";";
+    }
+
+    private String getClass(Type t) {
+        if(t instanceof IntType){
+            return "java/lang/Integer";
+        }
+        else if(t instanceof BoolType){
+            return "java/lang/Boolean";
+        }
+        else if(t instanceof ListType){
+            return "List";
+        }
+        else if (t instanceof VoidType) {
+            return "V";
+        }
+        else if(t instanceof FptrType){
+            return "Fptr";
+        }
+        else if(t instanceof StructType){
+            return ((StructType) t).getStructName().getName();
+        }
+        return "";
     }
 
     @Override
@@ -260,7 +283,6 @@ public class CodeGenerator extends Visitor<String> {
 //        addCommand(".end method\n");
 
         isMain = true;
-        String command = "";
         addCommand(".class public Main\n");
         addCommand(".super java/lang/Object\n");
 
@@ -287,7 +309,7 @@ public class CodeGenerator extends Visitor<String> {
         isMain = false;
 
         SymbolTable.pop();
-        return command;
+        return null;
     }
 
     private void initializeVar(VariableDeclaration varDeclaration, boolean isField) {
@@ -459,21 +481,26 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(ReturnStmt returnStmt) {
+        if (returnStmt.getReturnedExpr() == null){
+            addCommand("return\n");
+            return null;
+        }
         Type type = returnStmt.getReturnedExpr().accept(expressionTypeChecker);
         if(type instanceof VoidType) {
-            if(currentFunction != null &!(currentFunction.getReturnType() instanceof VoidType)) {
-                addCommand(returnStmt.getReturnedExpr().accept(this));
-                addCommand("areturn");
-            }
-            addCommand("return");
+            if(currentFunction != null)
+                if(!(currentFunction.getReturnType() instanceof VoidType)) {
+                    addCommand(returnStmt.getReturnedExpr().accept(this));
+                    addCommand("areturn\n");
+                }
+            addCommand("return\n");
         }
         else {
             addCommand(returnStmt.getReturnedExpr().accept(this));
             if(type instanceof IntType)
-                addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;");
+                addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n");
             else if(type instanceof BoolType)
-                addCommand("invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;");
-            addCommand("areturn");
+                addCommand("invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n");
+            addCommand("areturn\n");
         }
 
 //        if (returnStmt.getReturnedExpr() == null){
@@ -804,25 +831,43 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(Identifier identifier) {
-        String commands = "";
-        Type t = identifier.accept(this.expressionTypeChecker);
-        int slot = slotOf(identifier.getName()); //todo agar fptr bashe chi?
-        commands += "aload" + underlineOrSpace(slot) + slot + "\n";
-        if (t instanceof BoolType)
-            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
-        else if (t instanceof IntType)
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
-        return commands;
+        FunctionSymbolTableItem fsti = null;
+        try {
+            fsti = (FunctionSymbolTableItem) SymbolTable.root.getItem("Function_" + identifier.getName());
+        } catch (ItemNotFoundException exception) {
+        }
+        String command = "";
+        if (fsti == null) {
+            Type type = identifier.accept(expressionTypeChecker);
+            command += "aload " + slotOf(identifier.getName())+ "\n";
+            if(type instanceof IntType)
+                command += "invokevirtual java/lang/Integer/intValue()I\n";
+            else if(type instanceof  BoolType)
+                command += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+        }
+        else {
+            command += "new Fptr\n" +
+                    "dup\n" +
+                    (isMain ? "aload_1\n" : "aload_0\n") +
+                    "ldc \"" + identifier.getName() + "\"\n" +
+                    "invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V\n";
+        }
+        return command;
     }
 
     @Override
     public String visit(ListAccessByIndex listAccessByIndex) {
-        String command = listAccessByIndex.getInstance().accept(this);
-        command += listAccessByIndex.getIndex().accept(this);
-        command += "invokevirtual java/lang/Integer/intValue()I\n";
-        command += "invokevirtual List/getElement(I)Ljava/lang/Object;\n";
-        command += "checkcast java/lang/Integer\n"; //todo tabdil be primitive koo?
-        return command;
+        String commands = "";
+        commands += listAccessByIndex.getInstance().accept(this) + "\n";
+        commands += listAccessByIndex.getIndex().accept(this) + "\n";
+        Type type = listAccessByIndex.accept(expressionTypeChecker);
+        commands += "invokevirtual List/getElement(I)Ljava/lang/Object;\n";
+        commands += "checkcast " + getClass(type) + "\n";
+        if(type instanceof IntType)
+            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+        else if(type instanceof BoolType)
+            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+        return commands;
     }
 
     @Override
@@ -859,7 +904,7 @@ public class CodeGenerator extends Visitor<String> {
     }
 
     @Override
-    public String visit(ListAppend listAppend) {
+    public String visit(ListAppend listAppend) { // todo not sure
         String command = listAppend.getListArg().accept(this);
         command += "dup\n";
         command += listAppend.getElementArg().accept(this);
