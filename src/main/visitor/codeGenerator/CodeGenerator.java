@@ -457,7 +457,6 @@ public class CodeGenerator extends Visitor<String> {
         return null;
     }
 
-
     @Override
     public String visit(ReturnStmt returnStmt) {
         Type type = returnStmt.getReturnedExpr().accept(expressionTypeChecker);

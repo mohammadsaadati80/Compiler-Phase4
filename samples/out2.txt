@@ -1,7 +1,7 @@
 
 --------------------------Compiling--------------------------
 Exception in thread "main" java.lang.NullPointerException
-	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:462)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:463)
 	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
 	at main.ast.nodes.statement.ReturnStmt.accept(ReturnStmt.java:28)
 	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:214)
