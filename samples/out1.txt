@@ -5,16 +5,10 @@ Compilation successful
 -------------------Generating Class Files-------------------
 Generated: Fptr.class
 Generated: List.class
+Generated: Main.class
 Generated: Order.class
 Generated: ProductCatalog.class
-Main.j:44: Warning - Syntax error.
-
-^
-Main.j:45: JAS Error: Missing arguments for instruction invokespecial.
-		d
-		 ^
-Main.j: Found 2 errors
 
 ---------------------------Output---------------------------
-Error: Could not find or load main class Main
-Caused by: java.lang.ClassNotFoundException: Main
+Error: Unable to initialize main class Main
+Caused by: java.lang.VerifyError: (class: Main, method: createOrder signature: (LProductCatalog;Ljava/lang/Integer;)LOrder;) Unable to pop operand off an empty stack

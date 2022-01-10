@@ -5,17 +5,8 @@ Compilation successful
 -------------------Generating Class Files-------------------
 Generated: Fptr.class
 Generated: List.class
-Main.j:45: Warning - Syntax error.
-
-^
-Main.j:185: Warning - Syntax error.
-
-^
-Main.j:186: JAS Error: Missing arguments for instruction invokevirtual.
-		l
-		 ^
-Main.j: Found 3 errors
+Generated: Main.class
 
 ---------------------------Output---------------------------
-Error: Could not find or load main class Main
-Caused by: java.lang.ClassNotFoundException: Main
+Error: Unable to initialize main class Main
+Caused by: java.lang.VerifyError: (class: Main, method: k signature: (Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Integer;)Ljava/lang/Integer;) Expecting to find integer on stack

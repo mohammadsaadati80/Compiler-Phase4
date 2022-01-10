@@ -872,27 +872,42 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(FunctionCall functionCall) {
-        StringBuilder commands = new StringBuilder();
-        commands.append(functionCall.getInstance().accept(this));
-        commands.append("new java/util/ArrayList\ndup\ninvokespecial java/util/ArrayList/<init>()V\n"); //todo tempVar,slot(""),...
-        for (Expression e : functionCall.getArgs()) {
-            commands.append("dup\n");
-            commands.append(e.accept(this));
-            Type t = e.accept(this.expressionTypeChecker);
-            if (t instanceof IntType)
-                commands.append("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n");
-            if (t instanceof BoolType)
-                commands.append("invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n");
-            commands.append("invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z\npop\n");
+        String commands = "";
+        commands += functionCall.getInstance().accept(this);
+        commands += "new java/util/ArrayList\n";
+        commands += "dup\n";
+        commands += "invokespecial java/util/ArrayList/<init>()V\n";
+        int tempVar = slotOf("");
+        commands += "astore " + tempVar + "\n";
+        for(Expression arg : functionCall.getArgs()) {
+            commands += "aload " + tempVar + "\n";
+            Type argType = arg.accept(expressionTypeChecker);
+            if(argType instanceof ListType) {
+                commands += "new List\n";
+                commands += "dup\n";
+            }
+            commands += arg.accept(this);
+            if(argType instanceof IntType)
+                commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+            else if(argType instanceof BoolType)
+                commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+            else if(argType instanceof ListType) {
+                commands += "invokespecial List/<init>(LList;)V\n";
+            }
+            commands += "invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z\n";
+            commands += "pop\n";
         }
-        commands.append("invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;\n");
-        Type t = functionCall.accept(expressionTypeChecker);
-        commands.append(getTypeString(t));
-        if (t instanceof IntType)
-            commands.append("invokevirtual java/lang/Integer/intValue()I\n");
-        else if (t instanceof BoolType)
-            commands.append("invokevirtual java/lang/Boolean/booleanValue()Z\n");
-        return commands.toString();
+        commands += "aload " + tempVar + "\n";
+        commands += "invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;\n";
+        Type type = functionCall.accept(expressionTypeChecker);
+        if(!(type instanceof VoidType))
+            commands += "checkcast " + getClass(type) + "\n";
+        if(type instanceof IntType)
+            commands += "invokevirtual java/lang/Integer/intValue()I" + "\n";
+        else if(type instanceof  BoolType)
+            commands += "invokevirtual java/lang/Boolean/booleanValue()Z" + "\n";
+        --(this.tmpVarCnt);
+        return commands;
     }
 
     @Override
