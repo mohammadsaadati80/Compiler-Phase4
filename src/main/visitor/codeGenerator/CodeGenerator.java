@@ -906,8 +906,8 @@ public class CodeGenerator extends Visitor<String> {
             commands += "invokevirtual java/lang/Integer/intValue()I" + "\n";
         else if(type instanceof  BoolType)
             commands += "invokevirtual java/lang/Boolean/booleanValue()Z" + "\n";
-        --(this.tmpVarCnt);
-        return commands; //todo not sure need check why?
+        --(this.tmpVarCnt); //todo not sure need check why?
+        return commands;
     }
 
     @Override
