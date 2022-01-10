@@ -1,5 +1,14 @@
 
 --------------------------Compiling--------------------------
-Compilation successful
-
--------------------Generating Class Files-------------------
+Exception in thread "main" java.lang.NullPointerException
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:462)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
+	at main.ast.nodes.statement.ReturnStmt.accept(ReturnStmt.java:28)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:214)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
+	at main.ast.nodes.declaration.FunctionDeclaration.accept(FunctionDeclaration.java:55)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:131)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:23)
+	at main.ast.nodes.Program.accept(Program.java:50)
+	at main.CmmCompiler.compile(CmmCompiler.java:38)
+	at main.Cmm.main(Cmm.java:11)
