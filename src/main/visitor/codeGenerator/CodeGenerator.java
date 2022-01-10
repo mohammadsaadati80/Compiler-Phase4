@@ -811,8 +811,8 @@ public class CodeGenerator extends Visitor<String> {
                     commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
                 }
                 this.tmpVarCnt--;
-            } else if (binaryExpression.getFirstOperand() instanceof StructAccess) { //todo
-
+            } else if (binaryExpression.getFirstOperand() instanceof StructAccess) {
+                //todo
             }
         }
         return commands;
@@ -907,7 +907,7 @@ public class CodeGenerator extends Visitor<String> {
         else if(type instanceof  BoolType)
             commands += "invokevirtual java/lang/Boolean/booleanValue()Z" + "\n";
         --(this.tmpVarCnt);
-        return commands;
+        return commands; //todo not sure need check why?
     }
 
     @Override
