@@ -1,17 +1,2 @@
 
 --------------------------Compiling--------------------------
-Compilation successful
-
--------------------Generating Class Files-------------------
-Generated: Fptr.class
-Generated: List.class
-Generated: Order.class
-Generated: ProductCatalog.class
-Main.j:55: Warning - Syntax error.
-
-^
-Main.j: Found 1 errors
-
----------------------------Output---------------------------
-Error: Could not find or load main class Main
-Caused by: java.lang.ClassNotFoundException: Main

@@ -3,19 +3,3 @@
 Compilation successful
 
 -------------------Generating Class Files-------------------
-Generated: Fptr.class
-Generated: List.class
-Main.j:30: Warning - Syntax error.
-
-^
-Main.j:138: Warning - Syntax error.
-
-^
-Main.j:139: JAS Error: Missing arguments for instruction invokevirtual.
-		l
-		 ^
-Main.j: Found 3 errors
-
----------------------------Output---------------------------
-Error: Could not find or load main class Main
-Caused by: java.lang.ClassNotFoundException: Main

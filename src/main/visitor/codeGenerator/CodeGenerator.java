@@ -672,7 +672,7 @@ public class CodeGenerator extends Visitor<String> {
         String commands = "";
         Type t = identifier.accept(this.expressionTypeChecker);
         int slot = slotOf(identifier.getName()); //todo agar fptr bashe chi?
-        commands += "aload " + slot + "\n";
+        commands += "aload" + underlineOrSpace(slot) + slot + "\n";
         if (t instanceof BoolType)
             commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
         else if (t instanceof IntType)
