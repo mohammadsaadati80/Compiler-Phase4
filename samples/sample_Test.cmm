@@ -85,10 +85,10 @@ int zz;
 
 
 	display(zz);
-	zz = 99;
+	zz = 777;
 	display(zz);
 
-    int ii
+    int ii = 2
     while ii < 4 begin
         ii = ii + 1;
         display(ii);
@@ -103,11 +103,11 @@ int zz;
     	zzz = 999;
     	display(zzz);
 
-        int iii
-        while iii < 4 begin
-            iii = iii + 1;
-            display(iii);
-        end
+        int ooo
+            do begin
+                ooo = ooo + 1;
+                display(ooo);
+            end while ooo < 6
 
 
 

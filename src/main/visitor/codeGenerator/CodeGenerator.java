@@ -335,7 +335,8 @@ public class CodeGenerator extends Visitor<String> {
             structName = currentStruct.getStructName().getName();
             addCommand("aload 0");
         }
-        addCommand(this.generateValue(true, null, type, name));
+        addCommand(this.generateValue((varDeclaration.getDefaultValue() == null),
+                varDeclaration.getDefaultValue(), type, name));
         if(type instanceof IntType)
             addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;");
         else if(type instanceof BoolType)
@@ -445,7 +446,7 @@ public class CodeGenerator extends Visitor<String> {
     public String visit(AssignmentStmt assignmentStmt) {
         String commands = this.visit(new BinaryExpression(assignmentStmt.getLValue(), assignmentStmt.getRValue(), BinaryOperator.assign));
         addCommand(commands);
-//        addCommand("pop");
+        addCommand("pop"); // TODO need check
         return null;
     }
 
@@ -585,7 +586,22 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(LoopStmt loopStmt) {
-        //todo
+        String startLabel = getNewLabel();
+        String exitLabel = getNewLabel();
+        addCommand(startLabel + ":\n");
+        if(loopStmt.getIsDoWhile()) {
+            loopStmt.getBody().accept(this);
+            addCommand(loopStmt.getCondition().accept(this));
+            addCommand("ifeq " + exitLabel + "\n");
+        } else {
+            addCommand(loopStmt.getCondition().accept(this));
+            addCommand("ifeq " + exitLabel + "\n");
+            loopStmt.getBody().accept(this);
+        }
+        addCommand("goto " + startLabel + "\n");
+        addCommand(exitLabel + ":\n");
+        addCommand("iconst_0\n");
+        addCommand("pop\n");
         return null;
     }
 
