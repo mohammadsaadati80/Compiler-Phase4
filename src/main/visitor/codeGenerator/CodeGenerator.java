@@ -320,7 +320,7 @@ public class CodeGenerator extends Visitor<String> {
             structName = currentStruct.getStructName().getName();
         if(isField)
             addCommand("aload 0");
-        addCommand(this.generateValue(true, null, type));
+        addCommand(this.generateValue(true, null, type, name));
         if(type instanceof IntType)
             addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;");
         else if(type instanceof BoolType)
@@ -331,7 +331,7 @@ public class CodeGenerator extends Visitor<String> {
             addCommand("astore " + slotOf(varDeclaration.getVarName().getName()));
     }
 
-    private String generateValue(boolean isInitialization, Expression expr, Type type) {
+    private String generateValue(boolean isInitialization, Expression expr, Type type, String name) {
         if(type instanceof IntType) {
             if(isInitialization)
                 return this.visit(new IntValue(0));
@@ -357,16 +357,16 @@ public class CodeGenerator extends Visitor<String> {
             commands += "invokespecial java/util/ArrayList/<init>()V\n";
             int tempVar = slotOf("");
             commands += "astore " + tempVar + "\n";
-            if(isInitialization) {
-                commands += "aload " + tempVar + "\n";
-                commands += this.generateValue(true, null, ((ListType) type).getType()) + "\n";
-                if(((ListType) type).getType() instanceof IntType)
-                    commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
-                else if(((ListType) type).getType() instanceof BoolType)
-                    commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
-                commands += "invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z\n";
-                commands += "pop\n";
-            }
+//            if(isInitialization) {
+//                commands += "aload " + tempVar + "\n";
+//                commands += this.generateValue(true, null, ((ListType) type).getType(),name) + "\n";
+//                if(((ListType) type).getType() instanceof IntType)
+//                    commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+//                else if(((ListType) type).getType() instanceof BoolType)
+//                    commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+//                commands += "invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z\n";
+//                commands += "pop\n";
+//            }
 
             commands += "new List\n";
             commands += "dup\n";
@@ -392,8 +392,9 @@ public class CodeGenerator extends Visitor<String> {
 //        } else if (type instanceof FptrType)
 //            command += "aconst_null\n";
 //        return command;
-        if (currentFunction != null) localVars.add(variableDeclaration.getVarName().getName());
+
         this.initializeVar(variableDeclaration, isStruct);
+        if (currentFunction != null) localVars.add(variableDeclaration.getVarName().getName());
         return null;
     }
 

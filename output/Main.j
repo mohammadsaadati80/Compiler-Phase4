@@ -51,20 +51,50 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
-		ldc 0
-		
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
-		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
-		pop
+		astore 3
 		new List
 		dup
-		aload 4
+		aload 3
 		invokespecial List/<init>(Ljava/util/ArrayList;)V
 		astore 3
-		getstatic java/lang/System/out Ljava/io/PrintStream;
+		aload 3
+		dup
+		aload 1
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		aload 3
+		dup
 		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		aload 3
+		dup
+		aload 1
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		aload 3
+		dup
+		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		aload 3
+		dup
+		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		aload 3
+		dup
+		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual List/addElement(Ljava/lang/Object;)V
+		getstatic java/lang/System/out Ljava/io/PrintStream;
+		aload 3
+		
+		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		
+		invokevirtual List/getElement(I)Ljava/lang/Object;
+		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
 		ldc 2
 		imul
@@ -124,18 +154,18 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 3
-		aload 3
+		astore 4
+		aload 4
 		ldc 20
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 3
+		aload 4
 		ldc 1
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 3
+		aload 4
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
@@ -155,8 +185,8 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		pop
 		new Fptr
@@ -167,26 +197,26 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast Fptr
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		aload 1
 		invokevirtual java/lang/Integer/intValue()I
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 4
+		aload 5
 		ldc 2
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 4
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
@@ -211,20 +241,20 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		aload 3
 		invokevirtual java/lang/Integer/intValue()I
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 4
+		aload 5
 		aload 3
 		invokevirtual java/lang/Integer/intValue()I
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
-		aload 4
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
@@ -240,15 +270,15 @@
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast Fptr
 		new java/util/ArrayList
 		dup
 		invokespecial java/util/ArrayList/<init>()V
-		astore 4
-		aload 4
+		astore 5
+		aload 5
 		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
 		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
