@@ -930,14 +930,14 @@ public class CodeGenerator extends Visitor<String> {
     @Override
     public String visit(IntValue intValue) {
         String command = "ldc " + intValue.getConstant() + "\n";
-        command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        //command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         return command;
     }
 
     @Override
     public String visit(BoolValue boolValue) {
         String command = "ldc " + (boolValue.getConstant() ? 1 : 0) + "\n";
-        command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+        //command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
         return command;
     }
 

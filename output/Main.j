@@ -26,18 +26,15 @@
 		aload 0
 		ldc 155
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
 		aload 0
 		ldc 0
 		invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;
-		invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
 		aload 0
 		ldc 1
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
@@ -57,7 +54,6 @@
 		astore 4
 		aload 4
 		ldc 0
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
@@ -108,13 +104,11 @@
 		invokevirtual java/lang/Integer/intValue()I
 		invokevirtual java/lang/Integer/intValue()I
 		ldc 2
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/lang/Integer/intValue()I
 		imul
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/io/PrintStream/println(I)V
 		ldc 13
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		areturn
 .end method
@@ -148,10 +142,8 @@
 		.limit locals 128
 		getstatic java/lang/System/out Ljava/io/PrintStream;
 		ldc 1400
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/io/PrintStream/println(I)V
 		ldc 15
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		areturn
 .end method
@@ -175,12 +167,10 @@
 		aload 3
 		ldc 20
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
 		aload 3
 		ldc 1
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
@@ -190,7 +180,6 @@
 		invokevirtual java/lang/Integer/intValue()I
 		invokevirtual java/io/PrintStream/println(I)V
 		ldc 1
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		areturn
 .end method
@@ -233,7 +222,6 @@
 		pop
 		aload 4
 		ldc 2
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
 		pop
@@ -306,7 +294,6 @@
 		invokevirtual java/lang/Integer/intValue()I
 		pop
 		ldc 2
-		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		areturn
 .end method

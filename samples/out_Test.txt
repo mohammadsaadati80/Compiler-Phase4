@@ -8,5 +8,4 @@ Generated: List.class
 Generated: Main.class
 
 ---------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: main signature: ([Ljava/lang/String;)V) Expecting to find integer on stack
+true

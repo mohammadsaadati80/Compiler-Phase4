@@ -1,2 +1,2 @@
 main()
-    display(1400)
+    display(true)
