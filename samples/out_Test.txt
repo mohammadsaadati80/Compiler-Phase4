@@ -8,5 +8,9 @@ Generated: List.class
 Generated: Main.class
 
 ---------------------------Output---------------------------
-6
+4
+1
+2
+13
+1
 1400

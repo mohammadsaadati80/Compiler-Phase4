@@ -237,7 +237,10 @@ public class CodeGenerator extends Visitor<String> {
 //        if (t instanceof StructType)
 //            return "L" + ((StructType) t).getStructName().getName() + ";";
 //        return null;
-        return "L" + getClass(t) + ";";
+        if(t instanceof VoidType)
+            return "V";
+        else
+            return "L" + getClass(t) + ";";
     }
 
     private String getClass(Type t) {
@@ -249,9 +252,6 @@ public class CodeGenerator extends Visitor<String> {
         }
         else if(t instanceof ListType){
             return "List";
-        }
-        else if (t instanceof VoidType) {
-            return "V";
         }
         else if(t instanceof FptrType){
             return "Fptr";
@@ -614,32 +614,32 @@ public class CodeGenerator extends Visitor<String> {
         Type tr = binaryExpression.getSecondOperand().accept(expressionTypeChecker);
         if (operator == BinaryOperator.add) {
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += "iadd\n";
-            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         } else if (operator == BinaryOperator.sub) {
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += "isub\n";
-            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         } else if (operator == BinaryOperator.mult) {
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += "imul\n";
-            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         } else if (operator == BinaryOperator.div) {
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += "idiv\n";
-            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n"; // todo comment another like this?
         } else if ((operator == BinaryOperator.gt) || (operator == BinaryOperator.lt)) {
             commands += binaryExpression.getFirstOperand().accept(this);
             commands += "invokevirtual java/lang/Integer/intValue()I\n";

@@ -45,6 +45,49 @@
 		pop
 		return
 .end method
+.method public f(Ljava/lang/Integer;Ljava/lang/Integer;)Ljava/lang/Integer;
+		.limit stack 128
+		.limit locals 128
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 4
+		aload 4
+		ldc 0
+		
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		new List
+		dup
+		aload 4
+		invokespecial List/<init>(Ljava/util/ArrayList;)V
+		astore 3
+		getstatic java/lang/System/out Ljava/io/PrintStream;
+		aload 2
+		invokevirtual java/lang/Integer/intValue()I
+		ldc 2
+		imul
+		invokevirtual java/io/PrintStream/println(I)V
+		ldc 13
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		areturn
+.end method
+.method public g()LFptr;
+		.limit stack 128
+		.limit locals 128
+		new Fptr
+		dup
+		aload_0
+		ldc "f"
+		invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V
+		areturn
+.end method
+.method public h()V
+		.limit stack 128
+		.limit locals 128
+		return
+.end method
 .method public r()LFptr;
 		.limit stack 128
 		.limit locals 128
@@ -65,9 +108,89 @@
 		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
 		areturn
 .end method
+.method public j(Ljava/lang/Integer;Ljava/lang/Integer;)Ljava/lang/Integer;
+		.limit stack 128
+		.limit locals 128
+		getstatic java/lang/System/out Ljava/io/PrintStream;
+		aload 1
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual java/io/PrintStream/println(I)V
+		getstatic java/lang/System/out Ljava/io/PrintStream;
+		new Fptr
+		dup
+		aload_0
+		ldc "f"
+		invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 3
+		aload 3
+		ldc 20
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 3
+		ldc 1
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 3
+		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
+		checkcast java/lang/Integer
+		invokevirtual java/lang/Integer/intValue()I
+		invokevirtual java/io/PrintStream/println(I)V
+		ldc 1
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		areturn
+.end method
 .method public k(Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Integer;)Ljava/lang/Integer;
 		.limit stack 128
 		.limit locals 128
+		new Fptr
+		dup
+		aload_0
+		ldc "h"
+		invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 4
+		aload 4
+		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
+		pop
+		new Fptr
+		dup
+		aload_0
+		ldc "g"
+		invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 4
+		aload 4
+		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
+		checkcast Fptr
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 4
+		aload 4
+		aload 1
+		invokevirtual java/lang/Integer/intValue()I
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 4
+		ldc 2
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 4
+		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
+		checkcast java/lang/Integer
+		invokevirtual java/lang/Integer/intValue()I
+		pop
 		aload 2
 		invokevirtual java/lang/Boolean/booleanValue()Z
 		ifeq Label_0
@@ -80,7 +203,31 @@
 		iconst_0
 		pop
 		getstatic java/lang/System/out Ljava/io/PrintStream;
-		ldc 6
+		new Fptr
+		dup
+		aload_0
+		ldc "j"
+		invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V
+		new java/util/ArrayList
+		dup
+		invokespecial java/util/ArrayList/<init>()V
+		astore 4
+		aload 4
+		aload 3
+		invokevirtual java/lang/Integer/intValue()I
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 4
+		aload 3
+		invokevirtual java/lang/Integer/intValue()I
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z
+		pop
+		aload 4
+		invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;
+		checkcast java/lang/Integer
+		invokevirtual java/lang/Integer/intValue()I
 		invokevirtual java/io/PrintStream/println(I)V
 	Label_1:
 		iconst_0
