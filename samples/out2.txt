@@ -9,4 +9,4 @@ Generated: Main.class
 
 ---------------------------Output---------------------------
 Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: k signature: (Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Integer;)Ljava/lang/Integer;) Expecting to find object/array on stack
+Caused by: java.lang.VerifyError: (class: Main, method: f signature: (Ljava/lang/Integer;Ljava/lang/Integer;)Ljava/lang/Integer;) Expecting to find object/array on stack

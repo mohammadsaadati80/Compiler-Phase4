@@ -421,7 +421,7 @@ public class CodeGenerator extends Visitor<String> {
         String elseLabel = getNewLabel();
         String exitLabel = getNewLabel();
         addCommand(conditionalStmt.getCondition().accept(this));
-        addCommand("invokevirtual java/lang/Boolean/booleanValue()Z\n");
+       // addCommand("invokevirtual java/lang/Boolean/booleanValue()Z\n");
         addCommand("ifeq " + elseLabel + "\n");
         conditionalStmt.getThenBody().accept(this);
         addCommand("goto " + exitLabel + "\n");
@@ -732,7 +732,7 @@ public class CodeGenerator extends Visitor<String> {
                 secondOperandCommands = "new List\n" + "dup\n" + binaryExpression.getSecondOperand().accept(this)
                         + "\n" + "invokespecial List/<init>(LList;)V\n";
             }
-            if (binaryExpression.getFirstOperand() instanceof Identifier) { //todo need check not sure
+            if (binaryExpression.getFirstOperand() instanceof Identifier) { //todo not sure
                 commands += secondOperandCommands + "\n";
                 commands += "dup\n";
                 if(firstType instanceof IntType)
@@ -766,51 +766,60 @@ public class CodeGenerator extends Visitor<String> {
 //                    commands += "dup\n";
 //                    commands += "astore" + underlineOrSpace(slot) + slot + "\n";
 //                }
-            } else if (binaryExpression.getFirstOperand() instanceof ListAccessByIndex) { //todo need check
-                Type secondType = binaryExpression.getSecondOperand().accept(this.expressionTypeChecker);
-                ListAccessByIndex firstOperandListAccess = (ListAccessByIndex) binaryExpression.getFirstOperand();
-                this.tmpVarCnt++;
-                int tempSlot = slotOf("");
-                if (secondType instanceof IntType) {
-                    commands += "new java/lang/Integer\n";
-                    commands += "dup\n";
-                    commands += secondOperandCommands;
-                    commands += "invokespecial java/lang/Integer/<init>(I)V\n";
-                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-
-                    commands += firstOperandListAccess.getInstance().accept(this);
-                    commands += firstOperandListAccess.getIndex().accept(this);
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
-
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                    commands += "invokevirtual java/lang/Integer/intValue()I\n";
-                } else if (secondType instanceof BoolType) {
-                    commands += "new java/lang/Boolean\n";
-                    commands += "dup\n";
-                    commands += secondOperandCommands;
-                    commands += "invokespecial java/lang/Boolean/<init>(Z)V\n";
-                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-
-                    commands += firstOperandListAccess.getInstance().accept(this);
-                    commands += firstOperandListAccess.getIndex().accept(this);
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
-
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                    commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
-                } else {
-                    commands += secondOperandCommands;
-                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-
-                    commands += firstOperandListAccess.getInstance().accept(this);
-                    commands += firstOperandListAccess.getIndex().accept(this);
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
-
-                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
-                }
-                this.tmpVarCnt--;
+            } else if (binaryExpression.getFirstOperand() instanceof ListAccessByIndex) { //todo not sure
+                commands += ((ListAccessByIndex) binaryExpression.getFirstOperand()).getInstance().accept(this) + "\n";
+                commands += ((ListAccessByIndex) binaryExpression.getFirstOperand()).getIndex().accept(this) + "\n";
+                commands += secondOperandCommands + "\n";
+                commands += "dup_x2\n";
+                if(firstType instanceof IntType)
+                    commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+                else if(firstType instanceof BoolType)
+                    commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+                commands += "invokevirtual List/setElement(ILjava/lang/Object;)V";
+//                Type secondType = binaryExpression.getSecondOperand().accept(this.expressionTypeChecker);
+//                ListAccessByIndex firstOperandListAccess = (ListAccessByIndex) binaryExpression.getFirstOperand();
+//                this.tmpVarCnt++;
+//                int tempSlot = slotOf("");
+//                if (secondType instanceof IntType) {
+//                    commands += "new java/lang/Integer\n";
+//                    commands += "dup\n";
+//                    commands += secondOperandCommands;
+//                    commands += "invokespecial java/lang/Integer/<init>(I)V\n";
+//                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//
+//                    commands += firstOperandListAccess.getInstance().accept(this);
+//                    commands += firstOperandListAccess.getIndex().accept(this);
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
+//
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                    commands += "invokevirtual java/lang/Integer/intValue()I\n";
+//                } else if (secondType instanceof BoolType) {
+//                    commands += "new java/lang/Boolean\n";
+//                    commands += "dup\n";
+//                    commands += secondOperandCommands;
+//                    commands += "invokespecial java/lang/Boolean/<init>(Z)V\n";
+//                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//
+//                    commands += firstOperandListAccess.getInstance().accept(this);
+//                    commands += firstOperandListAccess.getIndex().accept(this);
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
+//
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                    commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+//                } else {
+//                    commands += secondOperandCommands;
+//                    commands += "astore" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//
+//                    commands += firstOperandListAccess.getInstance().accept(this);
+//                    commands += firstOperandListAccess.getIndex().accept(this);
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                    commands += "invokevirtual List/setElement(ILjava/lang/Object;)V\n";
+//
+//                    commands += "aload" + underlineOrSpace(tempSlot) + tempSlot + "\n";
+//                }
+//                this.tmpVarCnt--;
             } else if (binaryExpression.getFirstOperand() instanceof StructAccess) {
                 //todo
             }

@@ -1,2 +1,23 @@
+void h()
+    return
+
+fptr<void -> int> r()
+    return m
+
+int m() begin
+    display(1400)
+    return 15
+end
+
+int k(int arg1, bool arg2, int arg3) begin
+    h();
+    if (arg2)
+            return arg3;
+        else
+            display(6)
+    r()();
+    return 2;
+end
+
 main()
-    display(true)
+    k(155, false, 1);

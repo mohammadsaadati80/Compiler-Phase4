@@ -8,4 +8,5 @@ Generated: List.class
 Generated: Main.class
 
 ---------------------------Output---------------------------
-true
+6
+1400
