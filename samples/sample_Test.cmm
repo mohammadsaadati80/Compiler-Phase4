@@ -1,6 +1,6 @@
 int f(int a, int b) begin
     list #int li
-    size(li)
+    display(size(li))
     display(b * 2);
     return 13;
 end

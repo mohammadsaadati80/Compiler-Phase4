@@ -844,7 +844,7 @@ public class CodeGenerator extends Visitor<String> {
         FunctionSymbolTableItem fsti = null;
         try {
             fsti = (FunctionSymbolTableItem) SymbolTable.root.getItem("Function_" + identifier.getName());
-        } catch (ItemNotFoundException exception) {
+        } catch (ItemNotFoundException ignored) {
         }
         String command = "";
         if (fsti == null) {
@@ -921,34 +921,42 @@ public class CodeGenerator extends Visitor<String> {
     }
 
     @Override
-    public String visit(ListSize listSize) { // todo not work
+    public String visit(ListSize listSize) {
         String command = listSize.getArg().accept(this);
         command += "invokevirtual List/getSize()I\n";
-        command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n"; //todo comment? like Int & Bool visitor
+//        command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         return command;
     }
 
     @Override
-    public String visit(ListAppend listAppend) { // todo not sure
-        String command = listAppend.getListArg().accept(this);
+    public String visit(ListAppend listAppend) {
+        /*String command = listAppend.getListArg().accept(this);
         command += "dup\n";
         command += listAppend.getElementArg().accept(this);
+        command += "invokevirtual List/addElement(Ljava/lang/Object;)V\n";
+        return command;*/
+
+        Type elementType = listAppend.getElementArg().accept(expressionTypeChecker);
+        String command = listAppend.getListArg().accept(this);
+        command += listAppend.getElementArg().accept(this);
+
+        if (elementType instanceof IntType)
+            command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        if (elementType instanceof BoolType)
+            command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+
         command += "invokevirtual List/addElement(Ljava/lang/Object;)V\n";
         return command;
     }
 
     @Override
     public String visit(IntValue intValue) {
-        String command = "ldc " + intValue.getConstant() + "\n";
-        //command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
-        return command;
+        return "ldc " + intValue.getConstant() + "\n";
     }
 
     @Override
     public String visit(BoolValue boolValue) {
-        String command = "ldc " + (boolValue.getConstant() ? 1 : 0) + "\n";
-        //command += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
-        return command;
+        return "ldc " + (boolValue.getConstant() ? 1 : 0) + "\n";
     }
 
     @Override
