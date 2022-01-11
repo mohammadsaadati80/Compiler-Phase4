@@ -1,6 +1,6 @@
 int f(int a, int b) begin
     list #int li
-
+    size(li)
     display(b * 2);
     return 13;
 end
@@ -31,7 +31,7 @@ end
 int k(int arg1, bool arg2, int arg3) begin
     h();
     g()(arg1, 2);
-    if (arg2 | true)
+    if (arg2)
             return arg3;
         else
             display(j(arg3, arg3))

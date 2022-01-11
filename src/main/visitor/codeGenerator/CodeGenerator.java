@@ -921,7 +921,7 @@ public class CodeGenerator extends Visitor<String> {
     }
 
     @Override
-    public String visit(ListSize listSize) {
+    public String visit(ListSize listSize) { // todo not work
         String command = listSize.getArg().accept(this);
         command += "invokevirtual List/getSize()I\n";
         command += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n"; //todo comment? like Int & Bool visitor

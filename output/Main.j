@@ -57,6 +57,10 @@
 		aload 3
 		invokespecial List/<init>(Ljava/util/ArrayList;)V
 		astore 3
+		aload 3
+		invokevirtual List/getSize()I
+		invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;
+		pop
 		getstatic java/lang/System/out Ljava/io/PrintStream;
 		aload 2
 		invokevirtual java/lang/Integer/intValue()I
@@ -187,14 +191,6 @@
 		pop
 		aload 2
 		invokevirtual java/lang/Boolean/booleanValue()Z
-		ifne Label_2
-		ldc 1
-		ifne Label_2
-		iconst_0
-		goto Label_3
-		Label_2:
-		iconst_1
-		Label_3:
 		ifeq Label_0
 		aload 3
 		invokevirtual java/lang/Integer/intValue()I
