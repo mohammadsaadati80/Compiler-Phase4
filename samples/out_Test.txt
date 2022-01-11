@@ -6,9 +6,47 @@ Compilation successful
 Generated: Fptr.class
 Generated: List.class
 Generated: Main.class
-Generated: Order.class
-Generated: ProductCatalog.class
 
 ---------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: createOrder signature: (LProductCatalog;Ljava/lang/Integer;)LOrder;) Register 3 contains wrong type
+0
+99
+310
+36
+0
+99
+1
+2
+36
+13
+1
+1400
+0
+99
+0
+99
+310
+36
+0
+99
+1
+2
+36
+13
+1
+1400
+0
+999
+0
+9999
+0
+99
+310
+36
+0
+99
+1
+2
+36
+13
+1
+1400

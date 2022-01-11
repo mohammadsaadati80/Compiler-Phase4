@@ -1,56 +1,129 @@
-struct ProductCatalog begin
-    int id
-    int price
+int f(int a, int b) begin
+    list #int li
+    append(li, a)
+    append(li, b)
+    append(li, a)
+    append(li, b)
+    append(li, b)
+    append(li, b)
+    display(li[b] * 2);
+    display(size(li) * size(li));
+    return 13;
 end
 
-struct Order begin
-    int quantity
-    struct ProductCatalog product
+fptr<int, int -> int> g()
+    return f;
+
+
+void h()
+    return
+
+
+fptr<void -> int> r()
+    return m
+
+int m() begin
+    display(1400)
+    return 15
 end
 
-struct Order createOrder(struct ProductCatalog product, int quantity) begin
-    struct Order order
-    order.quantity = quantity
-    order.product = product
-    return order
+
+int j(int a, int b) begin
+    display(a)
+    display(f(20, 1))
+    return 1
+end
+
+int k(int arg1, bool arg2, int arg3) begin
+    int z;
+        display(z);
+        z = 99;
+        display(z);
+
+    int i
+    while i < 4 begin
+        i = i + 1;
+        display(i);
+    end
+
+    int o
+    do begin
+        o = o + 1;
+        display(o);
+    end while o < 6
+
+    bool boo = true;
+    do begin
+        display(boo);
+        boo = false;
+        display(boo);
+    end while boo
+
+
+
+
+
+    h();
+    g()(arg1, 2);
+    int y;
+        display(y);
+        y = 99;
+        display(y);
+    if (arg2)
+        return arg3;
+    else
+        display(j(arg3, arg3))
+
+    r()();
+    return 2;
 end
 
 main() begin
-    int i
-    int total
-    list #struct ProductCatalog productCatalog
-    list #struct Order orders
-    struct Order order
-    struct ProductCatalog member1
-    struct ProductCatalog member2
-    struct ProductCatalog member3
-    struct ProductCatalog member4
+    k(155, false, 1);
 
-    member1.id = 0
-    member2.id = 1
-    member3.id = 2
-    member4.id = 3
-    
-    append(productCatalog, member1)
-    append(productCatalog, member2)
-    append(productCatalog, member3)
-    append(productCatalog, member4)
+int zz;
 
 
-    productCatalog[0].price = 5000
-    productCatalog[1].price = 4000
-    productCatalog[2].price = 2000
-    productCatalog[3].price = 8000
+	display(zz);
+	zz = 99;
+	display(zz);
 
-    i = 0
+    int ii
+    while ii < 4 begin
+        ii = ii + 1;
+        display(ii);
+    end
 
+    k(155, false, 1);
+
+
+    int zzz;
+
+    display(zzz);
+    	zzz = 999;
+    	display(zzz);
+
+        int iii
+        while iii < 4 begin
+            iii = iii + 1;
+            display(iii);
+        end
+
+
+
+        int zzzz;
+
+        display(zzzz);
+        	zzzz = 9999;
+        	display(zzzz);
+
+            int iiii
+            while iiii < 4 begin
+                iiii = iiii + 1;
+                display(iiii);
+            end
+
+
+    k(155, false, 1);
 
 end
-
-
-
-
-
-
-
-
