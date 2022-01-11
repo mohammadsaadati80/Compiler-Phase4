@@ -1,3 +1,32 @@
+struct ProductCatalog begin
+    int id
+    int price
+end
+
+struct Order begin
+    int quantity
+    struct ProductCatalog product
+end
+
+struct Order createOrder(struct ProductCatalog product, int quantity) begin
+    struct Order order
+    order.quantity = quantity
+    order.product = product
+    return order
+end
+
+int getSum(list #struct Order orders) begin
+    int i = 0
+    int total = 0
+    int current
+    while i < size(orders) begin
+        current = orders[i].product.price * orders[i].quantity + orders[i].quantity * 100 - orders[i].product.price / 100;
+        total = total + current
+        i = i + 1
+    end
+    return total
+end
+
 int f(int a, int b) begin
     list #int li
     append(li, a)
@@ -31,10 +60,13 @@ end
 int j(int a, int b) begin
     display(a)
     display(f(20, 1))
-    return 1
+    return 456546
 end
 
 int k(int arg1, bool arg2, int arg3) begin
+
+
+
     int z;
         display(z);
         z = 99;
@@ -46,11 +78,16 @@ int k(int arg1, bool arg2, int arg3) begin
         display(i);
     end
 
-    int o
+    int o = 5
     do begin
         o = o + 1;
         display(o);
     end while o < 6
+
+    int zr = 8888;
+            display(zr);
+            zr = 99;
+            display(zr);
 
     bool boo = true;
     do begin
@@ -78,52 +115,66 @@ int k(int arg1, bool arg2, int arg3) begin
     return 2;
 end
 
+
 main() begin
-    k(155, false, 1);
+    int i
+    int total
+    list #struct ProductCatalog productCatalog
+    list #struct Order orders
+    struct Order order
+    struct ProductCatalog member1
+    struct ProductCatalog member2
+    struct ProductCatalog member3
+    struct ProductCatalog member4
 
-int zz;
+    member1.id = 0
+    member2.id = 1
+    member3.id = 2
+    member4.id = 3
+    
+    append(productCatalog, member1)
+    append(productCatalog, member2)
+    append(productCatalog, member3)
+    append(productCatalog, member4)
 
 
-	display(zz);
-	zz = 777;
-	display(zz);
+    productCatalog[0].price = 5000
+    productCatalog[1].price = 4000
+    productCatalog[2].price = 2000
+    productCatalog[3].price = 8000
 
-    int ii = 2
-    while ii < 4 begin
-        ii = ii + 1;
-        display(ii);
+    i = 0
+    while i < 4 begin
+        order = createOrder(productCatalog[i], i + 1)
+        append(orders, order)
+        i = i + 1
     end
+    total = getSum(orders)
+    display(total)
 
-    k(155, false, 1);
+     int q
+        k(155,false,2)
+        int a , b ,c ;
+             b = c = 8;
+         display(a);
+         display(b);
+         display(c);
+    k(155,true,2)
+        int x , z = 2;
+        display(x);
+       display(z);
+        x = z = 6
+        display(x);
+          display(z);
 
-
-    int zzz;
-
-    display(zzz);
-    	zzz = 999;
-    	display(zzz);
-
-        int ooo
-            do begin
-                ooo = ooo + 1;
-                display(ooo);
-            end while ooo < 6
-
-
-
-        int zzzz;
-
-        display(zzzz);
-        	zzzz = 9999;
-        	display(zzzz);
-
-            int iiii
-            while iiii < 4 begin
-                iiii = iiii + 1;
-                display(iiii);
-            end
-
-
-    k(155, false, 1);
-
+         q = 1
+        display(q + 2 * 85)
 end
+
+
+
+
+
+
+
+

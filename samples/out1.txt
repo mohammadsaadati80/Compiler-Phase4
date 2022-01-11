@@ -1,14 +1,27 @@
 
 --------------------------Compiling--------------------------
-Compilation successful
-
--------------------Generating Class Files-------------------
-Generated: Fptr.class
-Generated: List.class
-Generated: Main.class
-Generated: Order.class
-Generated: ProductCatalog.class
-
----------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: createOrder signature: (LProductCatalog;Ljava/lang/Integer;)LOrder;) Unable to pop operand off an empty stack
+Exception in thread "main" java.lang.ClassCastException: class main.ast.types.NoType cannot be cast to class main.ast.types.StructType (main.ast.types.NoType and main.ast.types.StructType are in unnamed module of loader 'app')
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:959)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.expression.StructAccess.accept(StructAccess.java:37)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:890)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:451)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.statement.AssignmentStmt.accept(AssignmentStmt.java:39)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:459)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.statement.BlockStmt.accept(BlockStmt.java:27)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:603)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.statement.LoopStmt.accept(LoopStmt.java:40)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:459)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.statement.BlockStmt.accept(BlockStmt.java:27)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:314)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.declaration.MainDeclaration.accept(MainDeclaration.java:23)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:130)
+	at main.visitor.codeGenerator.CodeGenerator.visit(CodeGenerator.java:24)
+	at main.ast.nodes.Program.accept(Program.java:50)
+	at main.CmmCompiler.compile(CmmCompiler.java:38)
+	at main.Cmm.main(Cmm.java:11)

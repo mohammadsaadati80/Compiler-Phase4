@@ -10,5 +10,4 @@ Generated: Order.class
 Generated: ProductCatalog.class
 
 ---------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: createOrder signature: (LProductCatalog;Ljava/lang/Integer;)LOrder;) Unable to pop operand off an empty stack
+51810

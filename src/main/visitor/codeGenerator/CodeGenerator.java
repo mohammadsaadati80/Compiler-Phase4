@@ -160,7 +160,8 @@ public class CodeGenerator extends Visitor<String> {
         addCommand(".limit locals 128");
 
         addCommand("aload_0");
-        addCommand("invokespecial " + structDeclaration.getStructName().getName() + "/<init>()V");
+        addCommand("invokespecial java/lang/Object/<init>()V");
+//        addCommand("invokespecial " + structDeclaration.getStructName().getName() + "/<init>()V");
 
         //todo chera moteghayyer ha visit nashodan?
         structDeclaration.getBody().accept(this);
@@ -335,8 +336,11 @@ public class CodeGenerator extends Visitor<String> {
             structName = currentStruct.getStructName().getName();
             addCommand("aload 0");
         }
-        addCommand(this.generateValue((varDeclaration.getDefaultValue() == null),
-                varDeclaration.getDefaultValue(), type, name));
+
+        if (!(type instanceof StructType)) {
+            addCommand(this.generateValue((varDeclaration.getDefaultValue() == null),
+                    varDeclaration.getDefaultValue(), type, name));
+        }
         if(type instanceof IntType)
             addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;");
         else if(type instanceof BoolType)
@@ -383,7 +387,7 @@ public class CodeGenerator extends Visitor<String> {
             else
                 return expr.accept(this);
         }
-        else if(type instanceof StructType || type instanceof FptrType) {
+        else if(type instanceof FptrType) {
             if(isInitialization)
                 return "aconst_null";
             else
@@ -923,19 +927,57 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(StructAccess structAccess) {
+/*        Type memberType = structAccess.accept(expressionTypeChecker);
+        Type instanceType = structAccess.getInstance().accept(expressionTypeChecker);
+        String memberName = structAccess.getElement().getName();
+        String commands = "";
+        String className = ((StructType) instanceType).getStructName().getName();
+        commands += structAccess.getInstance().accept(this) + "\n";
+        commands += "getfield " + className + "/" + memberName + " " + getTypeString(memberType) + "\n";
+        if (memberType instanceof IntType) {
+            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+        } else if (memberType instanceof BoolType) {
+            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+        }
+
+        return "";*/
+
+
+        /*String command = structAccess.getInstance().accept(this);
+
+        Type elementType = structAccess.accept(expressionTypeChecker);
+        StructType structType = (StructType) structAccess.getInstance().accept(expressionTypeChecker);
+
+        command += "getfield " + structType.getStructName().getName() + "/" + structAccess.getElement().getName() + " " + getTypeString(elementType);
+        command += "\n";
+        return command;*/
+
         Type memberType = structAccess.accept(expressionTypeChecker);
         Type instanceType = structAccess.getInstance().accept(expressionTypeChecker);
         String memberName = structAccess.getElement().getName();
-//        String commands = "";
-//        String className = ((StructType) instanceType).getStructName().getName();
-//        commands += structAccess.getInstance().accept(this) + "\n";
-//        commands += "getfield " + className + "/" + memberName + " " + getTypeString(memberType) + "\n";
-//        if (memberType instanceof IntType) {
-//            commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
-//        } else if (memberType instanceof BoolType) {
-//            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
-//        }
-        return "";
+        String commands = "";
+        String className = ((StructType) instanceType).getStructName().getName();
+        try {
+            SymbolTable classSymbolTable = ((StructSymbolTableItem) SymbolTable.root.getItem(StructSymbolTableItem.START_KEY + className)).getStructSymbolTable();
+            try {
+                classSymbolTable.getItem(VariableSymbolTableItem.START_KEY + memberName);
+                commands += structAccess.getInstance().accept(this) + "\n";
+                commands += "getfield " + className + "/" + memberName + " " + getTypeString(memberType) + "\n";
+                if(memberType instanceof IntType)
+                    commands += "\ninvokevirtual java/lang/Integer/intValue()I\n";
+                else if(memberType instanceof  BoolType)
+                    commands += "\ninvokevirtual java/lang/Boolean/booleanValue()Z\n";
+            } catch (ItemNotFoundException memberIsMethod) {
+                commands += "new Fptr\n";
+                commands += "dup\n";
+                commands += structAccess.getInstance().accept(this) + "\n";
+                commands += "ldc \"" + memberName + "\"\n";
+                commands += "invokespecial Fptr/<init>(Ljava/lang/Object;Ljava/lang/String;)V\n";
+            }
+        } catch (ItemNotFoundException ignored) {
+        }
+        return commands;
+
     }
 
     @Override
