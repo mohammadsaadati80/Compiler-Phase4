@@ -182,7 +182,7 @@ public class CodeGenerator extends Visitor<String> {
         currentFunction = functionDeclaration;
         String funcName = functionDeclaration.getFunctionName().getName();
 
-        localVars.clear();
+
         for (VariableDeclaration variableDeclaration : functionDeclaration.getArgs())
             localVars.add(variableDeclaration.getVarName().getName()); //todo nabayad ghable for localVar Clear she?
 
@@ -215,7 +215,7 @@ public class CodeGenerator extends Visitor<String> {
 
         addCommand(".end method\n");
         currentFunction = null;
-
+        localVars.clear();
         SymbolTable.pop();
         return null;
     }

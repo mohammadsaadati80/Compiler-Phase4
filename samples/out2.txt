@@ -3,10 +3,3 @@
 Compilation successful
 
 -------------------Generating Class Files-------------------
-Generated: Fptr.class
-Generated: List.class
-Generated: Main.class
-
----------------------------Output---------------------------
-Error: Unable to initialize main class Main
-Caused by: java.lang.VerifyError: (class: Main, method: f signature: (Ljava/lang/Integer;Ljava/lang/Integer;)Ljava/lang/Integer;) Expecting to find object/array on stack

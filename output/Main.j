@@ -57,44 +57,8 @@
 		aload 3
 		invokespecial List/<init>(Ljava/util/ArrayList;)V
 		astore 3
-		aload 3
-		dup
-		aload 1
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
-		aload 3
-		dup
-		aload 2
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
-		aload 3
-		dup
-		aload 1
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
-		aload 3
-		dup
-		aload 2
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
-		aload 3
-		dup
-		aload 2
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
-		aload 3
-		dup
-		aload 2
-		invokevirtual java/lang/Integer/intValue()I
-		invokevirtual List/addElement(Ljava/lang/Object;)V
 		getstatic java/lang/System/out Ljava/io/PrintStream;
-		aload 3
-		
 		aload 2
-		invokevirtual java/lang/Integer/intValue()I
-		
-		invokevirtual List/getElement(I)Ljava/lang/Object;
-		checkcast java/lang/Integer
 		invokevirtual java/lang/Integer/intValue()I
 		ldc 2
 		imul
