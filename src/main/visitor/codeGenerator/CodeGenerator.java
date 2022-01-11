@@ -640,12 +640,12 @@ public class CodeGenerator extends Visitor<String> {
             commands += binaryExpression.getSecondOperand().accept(this);
             //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += "idiv\n";
-            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n"; // todo comment another like this?
+            //commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
         } else if ((operator == BinaryOperator.gt) || (operator == BinaryOperator.lt)) {
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Integer/intValue()I\n";
+            //commands += "invokevirtual java/lang/Integer/intValue()I\n";
 
             String nFalse = getNewLabel();
             String nAfter = getNewLabel();
@@ -658,22 +658,22 @@ public class CodeGenerator extends Visitor<String> {
             commands += nFalse + ":\n";
             commands += "iconst_0\n";
             commands += nAfter + ":\n";
-            commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+            //commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
         } else if (operator == BinaryOperator.eq) {
             String nFalse = getNewLabel();
             String nAfter = getNewLabel();
             if (tl instanceof IntType) {
                 commands += binaryExpression.getFirstOperand().accept(this);
-                commands += "invokevirtual java/lang/Integer/intValue()I\n";
+                //commands += "invokevirtual java/lang/Integer/intValue()I\n";
                 commands += binaryExpression.getSecondOperand().accept(this);
-                commands += "invokevirtual java/lang/Integer/intValue()I\n";
+                //commands += "invokevirtual java/lang/Integer/intValue()I\n";
                 commands += "if_icmpne " + nFalse + "\n";
             }
             if (tl instanceof BoolType) {
                 commands += binaryExpression.getFirstOperand().accept(this);
-                commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+                //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
                 commands += binaryExpression.getSecondOperand().accept(this);
-                commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+                //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
                 commands += "if_icmpne " + nFalse + "\n";
             }
             if (tl instanceof ListType || tl instanceof FptrType) {
@@ -686,7 +686,7 @@ public class CodeGenerator extends Visitor<String> {
             commands += nFalse + ":\n";
             commands += "iconst_0\n";
             commands += nAfter + ":\n";
-            commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+            //commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
             /*else if (operandsType instanceof ListType) {
                 ListType firstOperand = (ListType) binaryExpression.getFirstOperand().accept(this.expressionTypeChecker);
                 ListType secondOperand = (ListType) binaryExpression.getSecondOperand().accept(this.expressionTypeChecker);
@@ -700,32 +700,32 @@ public class CodeGenerator extends Visitor<String> {
             String nFalse = getNewLabel();
             String nAfter = getNewLabel();
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+            //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
             commands += "ifeq " + nFalse + "\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+            //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
             commands += "ifeq " + nFalse + "\n";
             commands += "iconst_1" + "\n";
             commands += "goto " + nAfter + "\n";
             commands += nFalse + ":\n";
             commands += "iconst_0" + "\n";
             commands += nAfter + ":\n";
-            commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+            //commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
         } else if (operator == BinaryOperator.or) {
             String nFalse = getNewLabel();
             String nAfter = getNewLabel();
             commands += binaryExpression.getFirstOperand().accept(this);
-            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+            //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
             commands += "ifne " + nFalse + "\n";
             commands += binaryExpression.getSecondOperand().accept(this);
-            commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+            //commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
             commands += "ifne " + nFalse + "\n";
             commands += "iconst_0" + "\n";
             commands += "goto " + nAfter + "\n";
             commands += nFalse + ":\n";
             commands += "iconst_1" + "\n";
             commands += nAfter + ":\n";
-            commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+            //commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n"; // todo comment another like this?
         } else if (operator == BinaryOperator.assign) {
             Type firstType = binaryExpression.getFirstOperand().accept(expressionTypeChecker);
             String secondOperandCommands = binaryExpression.getSecondOperand().accept(this);

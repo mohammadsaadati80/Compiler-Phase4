@@ -187,6 +187,14 @@
 		pop
 		aload 2
 		invokevirtual java/lang/Boolean/booleanValue()Z
+		ifne Label_2
+		ldc 1
+		ifne Label_2
+		iconst_0
+		goto Label_3
+		Label_2:
+		iconst_1
+		Label_3:
 		ifeq Label_0
 		aload 3
 		invokevirtual java/lang/Integer/intValue()I
