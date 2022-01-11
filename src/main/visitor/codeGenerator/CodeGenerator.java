@@ -528,7 +528,7 @@ public class CodeGenerator extends Visitor<String> {
                 commands += binaryExpression.getSecondOperand().accept(this);
                 commands += "if_icmpne " + nFalse + "\n";
             }
-            if (tl instanceof ListType || tl instanceof FptrType) {
+            if ((tl instanceof ListType) || (tl instanceof FptrType) || (tl instanceof StructType)) {
                 commands += binaryExpression.getFirstOperand().accept(this);
                 commands += binaryExpression.getSecondOperand().accept(this);
                 commands += "if_acmpne " + nFalse + "\n";

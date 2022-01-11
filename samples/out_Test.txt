@@ -1,5 +1,8 @@
 
 --------------------------Compiling--------------------------
+line 2:0 extraneous input 'end' expecting {'int', 'bool', 'list', 'struct', 'fptr', '
+'}
+line 4:13 no viable alternative at input 'structOrderbegin'
 Compilation successful
 
 -------------------Generating Class Files-------------------
@@ -10,48 +13,5 @@ Generated: Order.class
 Generated: ProductCatalog.class
 
 ---------------------------Output---------------------------
-51810
-0
-99
-1
-2
-3
-4
-6
-8888
-99
-true
 false
-310
-36
-0
-99
-2
-2
-36
-13
-456546
-1400
-0
-8
-8
-0
-99
-1
-2
-3
-4
-6
-8888
-99
 true
-false
-310
-36
-0
-99
-0
-2
-6
-6
-171
