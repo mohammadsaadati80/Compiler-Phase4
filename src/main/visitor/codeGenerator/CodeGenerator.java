@@ -14,6 +14,7 @@ import main.symbolTable.*;
 import main.symbolTable.exceptions.*;
 import main.symbolTable.items.FunctionSymbolTableItem;
 import main.symbolTable.items.StructSymbolTableItem;
+import main.symbolTable.items.VariableSymbolTableItem;
 import main.visitor.Visitor;
 import main.visitor.type.ExpressionTypeChecker;
 
@@ -108,8 +109,8 @@ public class CodeGenerator extends Visitor<String> {
         int count = 1;
         if(currentFunction == null) //todo not sure
             return tmpVarCnt++;
-        for (int i = 0; i < localVars.size(); i++) {
-            if (localVars.get(i).equals(identifier)) return count;
+        for (String localVar : localVars) {
+            if (localVar.equals(identifier)) return count;
             count++;
         }
         return count + tmpVarCnt++; //todo or return count; ??
@@ -325,6 +326,21 @@ public class CodeGenerator extends Visitor<String> {
             addCommand("invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;");
         else if(type instanceof BoolType)
             addCommand("invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;");
+        /*else if(type instanceof ListType){
+            String command = "";
+            command += "new List\ndup\nnew java/util/ArrayList\ndup\ninvokespecial java/util/ArrayList/<init>()V\n";
+            for (ListNameType e : ((ListType) varDeclaration.getVarType()).getType()) {
+                command += "dup\n";
+                command += initializeVar(e.getType());
+                command += "invokevirtual java/util/ArrayList/add(Ljava/lang/Object;)Z\npop\n";
+            }
+            command += "invokespecial List/<init>(Ljava/util/ArrayList;)V\n";
+            addCommand(command);
+        }
+        else if(type instanceof FptrType)
+            System.out.println('l');
+        else if(type instanceof StructType)
+            System.out.println('l');*/
         if(isField)
             addCommand("putfield " + structName + "/" + name + " " + getTypeString(type));
         else
@@ -823,6 +839,37 @@ public class CodeGenerator extends Visitor<String> {
 //                this.tmpVarCnt--;
             } else if (binaryExpression.getFirstOperand() instanceof StructAccess) {
                 //todo
+
+                /*Expression instance = ((StructAccess) binaryExpression.getFirstOperand()).getInstance();
+                Type memberType = binaryExpression.getFirstOperand().accept(expressionTypeChecker);
+                String memberName = ((StructAccess) binaryExpression.getFirstOperand()).getElement().getName();
+                Type instanceType = instance.accept(expressionTypeChecker);
+
+                String className = ((StructType)instanceType).getStructName().getName();
+                commands += instance.accept(this) + "\n";
+                commands += binaryExpression.getSecondOperand().accept(this) + "\n";
+
+                if (memberType instanceof IntType) {
+                    commands += "invokestatic java/lang/Integer/valueOf(I)Ljava/lang/Integer;\n";
+                } else if (memberType instanceof BoolType) {
+                    commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
+                }
+
+                commands += "putfield " + className+ "/" + memberName + " "
+                        + getTypeString(memberType) + "\n";*/
+
+
+
+
+
+
+                Expression instance = ((StructAccess) binaryExpression.getFirstOperand()).getInstance();
+                String memberName = ((StructAccess) binaryExpression.getFirstOperand()).getElement().getName();
+                Type instanceType = instance.accept(expressionTypeChecker);
+                commands += binaryExpression.getFirstOperand().accept(this);
+                commands += "putfield "+((StructType)instanceType).getStructName().getName() +"/"+memberName
+                        +" "+getTypeString(binaryExpression.getSecondOperand().accept(expressionTypeChecker))+"\n";
+
             }
         }
         return commands;
@@ -835,8 +882,28 @@ public class CodeGenerator extends Visitor<String> {
 
     @Override
     public String visit(StructAccess structAccess) {
-        //todo
-        return null;
+        Type memberType = structAccess.accept(expressionTypeChecker);
+        Type instanceType = structAccess.getInstance().accept(expressionTypeChecker);
+        String memberName = structAccess.getElement().getName();
+        String commands = "";
+        String className = ((StructType) instanceType).getStructName().getName();
+        try {
+            SymbolTable symbolTable = ((StructSymbolTableItem)SymbolTable.root.getItem
+                    (StructSymbolTableItem.START_KEY + className)).getStructSymbolTable();
+            try {
+                symbolTable.getItem(VariableSymbolTableItem.START_KEY + memberName);
+                commands += structAccess.getInstance().accept(this) + "\n";
+                commands += "getfield " + className + "/" + memberName + " " + getTypeString(memberType) + "\n";
+                if (memberType instanceof IntType) {
+                    commands += "invokevirtual java/lang/Integer/intValue()I\n";
+                } else if (memberType instanceof BoolType) {
+                    commands += "invokevirtual java/lang/Boolean/booleanValue()Z\n";
+                }
+            } catch (ItemNotFoundException ignored) {
+            }
+        } catch (ItemNotFoundException ignored) {
+        }
+        return commands;
     }
 
     @Override
