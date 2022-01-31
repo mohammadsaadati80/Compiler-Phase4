@@ -1,0 +1,13 @@
+
+--------------------------Compiling--------------------------
+Compilation successful
+
+-------------------Generating Class Files-------------------
+Generated: A.class
+Generated: Fptr.class
+Generated: List.class
+Generated: Main.class
+
+---------------------------Output---------------------------
+Error: Unable to initialize main class Main
+Caused by: java.lang.VerifyError: (class: Main, method: f signature: (Ljava/lang/Integer;LA;)V) Falling off the end of the code
