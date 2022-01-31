@@ -215,6 +215,15 @@ public class CodeGenerator extends Visitor<String> {
 
         functionDeclaration.getBody().accept(this);
 
+        if (functionDeclaration.getReturnType() instanceof VoidType){
+            if (functionDeclaration.getBody() instanceof BlockStmt){
+                BlockStmt blockStmt = (BlockStmt) functionDeclaration.getBody();
+                if(!(blockStmt.getStatements().get(blockStmt.getStatements().size() - 1) instanceof ReturnStmt)){
+                    addCommand("return\n");
+                }
+            }
+        }
+
         addCommand(".end method\n");
         currentFunction = null;
         localVars.clear();

@@ -3,15 +3,13 @@
 Compilation successful
 
 -------------------Generating Class Files-------------------
-Generated: A.class
 Generated: Fptr.class
 Generated: List.class
-Generated: Main.class
+Main.j:131: JAS Error: Missing arguments for instruction checkcast.
+		p
+		 ^
+Main.j: Found 1 errors
 
 ---------------------------Output---------------------------
-417
-139
-46
-15
-5
-1
+Error: Could not find or load main class Main
+Caused by: java.lang.ClassNotFoundException: Main
