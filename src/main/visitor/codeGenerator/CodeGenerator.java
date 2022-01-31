@@ -218,9 +218,9 @@ public class CodeGenerator extends Visitor<String> {
         if (functionDeclaration.getReturnType() instanceof VoidType){
             if (functionDeclaration.getBody() instanceof BlockStmt){
                 BlockStmt blockStmt = (BlockStmt) functionDeclaration.getBody();
-                if(!(blockStmt.getStatements().get(blockStmt.getStatements().size() - 1) instanceof ReturnStmt)){
-                    addCommand("return\n");
-                }
+                if (blockStmt.getStatements().size() == 0) addCommand("return\n");
+                else if(!(blockStmt.getStatements().get(blockStmt.getStatements().size() - 1) instanceof ReturnStmt))
+                        addCommand("return\n");
             }
         }
 

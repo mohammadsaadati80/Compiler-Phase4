@@ -1,28 +1,24 @@
-struct ProductCatalog begin
+struct A
+    int x
+
+
+struct A start(int x1, struct A a) begin
+        a.x = x1
+        return a
 end
 
-struct Order begin
-    int quantity
-    struct ProductCatalog product
+void f(int a, struct A aa) begin
+        if (aa.x == 1 | a < 1)
+          return;
+        aa.x = aa.x / a;
+        display(aa.x);
+
+        f(a, aa);
 end
+
 
 main() begin
-
-	struct Order a, b
-
-	a.quantity = 1
-	b.quantity = 1
-	display(a==b)
-
-	a = b
-	display(a==b)
-
-end
-
-
-
-
-
-
-
-
+     struct A a
+     a = start(1252, a);
+     f(3, a);
+ end
