@@ -1,0 +1,11 @@
+
+
+int func() begin
+    int var
+    var = 53
+    return var;
+    return 1;
+end
+
+main()
+    display(func());

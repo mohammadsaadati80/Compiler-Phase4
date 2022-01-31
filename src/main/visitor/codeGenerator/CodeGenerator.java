@@ -684,7 +684,8 @@ public class CodeGenerator extends Visitor<String> {
         commands += listAccessByIndex.getIndex().accept(this) + "\n";
         Type type = listAccessByIndex.accept(expressionTypeChecker);
         commands += "invokevirtual List/getElement(I)Ljava/lang/Object;\n";
-        commands += "checkcast " + getClass(type) + "\n";
+        if (!(type instanceof VoidType) && !(type instanceof NoType))
+            commands += "checkcast " + getClass(type) + "\n";
         if (type instanceof IntType)
             commands += "invokevirtual java/lang/Integer/intValue()I\n";
         else if (type instanceof BoolType)
@@ -722,7 +723,7 @@ public class CodeGenerator extends Visitor<String> {
         commands += "aload " + tempVar + "\n";
         commands += "invokevirtual Fptr/invoke(Ljava/util/ArrayList;)Ljava/lang/Object;\n";
         Type type = functionCall.accept(expressionTypeChecker);
-        if (!(type instanceof VoidType))
+        if (!(type instanceof VoidType) && !(type instanceof NoType))
             commands += "checkcast " + getClass(type) + "\n";
         if (type instanceof IntType)
             commands += "invokevirtual java/lang/Integer/intValue()I" + "\n";
