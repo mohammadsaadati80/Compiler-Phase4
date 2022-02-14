@@ -1,0 +1,29 @@
+struct point begin
+    int x, y
+end
+
+struct coordinate begin
+    list #int rec
+end
+
+struct point initialPoint(int x, int y) begin
+    struct point temp
+    temp.x = x
+    temp.y = y
+    return temp
+end
+
+main() begin
+    int x, y=0
+    struct point p
+    struct coordinate c
+    x = 0
+    p = initialPoint(x, y)
+    append(c.rec, p.x)
+    p = initialPoint(x + 1, y+1)
+    append(c.rec, p.y)
+    append(c.rec, p.x)
+    display(c.rec[x + 1])
+end
+
+

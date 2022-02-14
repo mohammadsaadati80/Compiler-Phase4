@@ -1,0 +1,13 @@
+
+--------------------------Compiling--------------------------
+Compilation successful
+
+-------------------Generating Class Files-------------------
+Generated: Fptr.class
+Generated: List.class
+Generated: Main.class
+Generated: Order.class
+Generated: ProductCatalog.class
+
+---------------------------Output---------------------------
+51810
