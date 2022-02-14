@@ -106,13 +106,13 @@ public class CodeGenerator extends Visitor<String> {
 
     private int slotOf(String identifier) {
         int count = 1;
-        if (currentFunction == null) //todo not sure
+        if (currentFunction == null)
             return tmpVarCnt++;
         for (String localVar : localVars) {
             if (localVar.equals(identifier)) return count;
             count++;
         }
-        return count + tmpVarCnt++; //todo or return count; ??
+        return count + tmpVarCnt++;
     }
 
     @Override
@@ -391,7 +391,7 @@ public class CodeGenerator extends Visitor<String> {
         expressionTypeChecker.setInFunctionCallStmt(true);
         addCommand(functionCallStmt.getFunctionCall().accept(this));
         Type t = functionCallStmt.getFunctionCall().accept(expressionTypeChecker);
-        if (!(t instanceof VoidType)) addCommand("pop\n"); // TODO pop if void ?
+        if (!(t instanceof VoidType)) addCommand("pop\n");
         expressionTypeChecker.setInFunctionCallStmt(false);
         return null;
     }
@@ -578,7 +578,7 @@ public class CodeGenerator extends Visitor<String> {
                 secondOperandCommands = "new List\n" + "dup\n" + binaryExpression.getSecondOperand().accept(this)
                         + "\n" + "invokespecial List/<init>(LList;)V\n";
             }
-            if (binaryExpression.getFirstOperand() instanceof Identifier) { //todo not sure
+            if (binaryExpression.getFirstOperand() instanceof Identifier) {
                 commands += secondOperandCommands + "\n";
                 commands += "dup\n";
                 if (firstType instanceof IntType)
@@ -587,7 +587,7 @@ public class CodeGenerator extends Visitor<String> {
                     commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
                 int varSlot = slotOf(((Identifier) binaryExpression.getFirstOperand()).getName());
                 commands += "astore" + underlineOrSpace(varSlot) + varSlot + "\n";
-            } else if (binaryExpression.getFirstOperand() instanceof ListAccessByIndex) { //todo not sure
+            } else if (binaryExpression.getFirstOperand() instanceof ListAccessByIndex) {
                 commands += ((ListAccessByIndex) binaryExpression.getFirstOperand()).getInstance().accept(this) + "\n";
                 commands += ((ListAccessByIndex) binaryExpression.getFirstOperand()).getIndex().accept(this) + "\n";
                 commands += secondOperandCommands + "\n";
@@ -597,7 +597,7 @@ public class CodeGenerator extends Visitor<String> {
                 else if (firstType instanceof BoolType)
                     commands += "invokestatic java/lang/Boolean/valueOf(Z)Ljava/lang/Boolean;\n";
                 commands += "invokevirtual List/setElement(ILjava/lang/Object;)V";
-            } else if (binaryExpression.getFirstOperand() instanceof StructAccess) { //todo not sure
+            } else if (binaryExpression.getFirstOperand() instanceof StructAccess) {
                 Expression instance = ((StructAccess) binaryExpression.getFirstOperand()).getInstance();
                 Type memberType = binaryExpression.getFirstOperand().accept(expressionTypeChecker);
                 String memberName = ((StructAccess) binaryExpression.getFirstOperand()).getElement().getName();
@@ -729,7 +729,7 @@ public class CodeGenerator extends Visitor<String> {
             commands += "invokevirtual java/lang/Integer/intValue()I" + "\n";
         else if (type instanceof BoolType)
             commands += "invokevirtual java/lang/Boolean/booleanValue()Z" + "\n";
-        tmpVarCnt--; //todo not sure need check why?
+        tmpVarCnt--;
         return commands;
     }
 
